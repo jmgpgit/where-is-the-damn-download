@@ -6,10 +6,6 @@ A browser extension for people who were sent to a GitHub repository to
 
 ![A post on r/github asking why there is code instead of an exe file](docs/source.png)
 
-That post got 13,000 upvotes, which is a lot of people having the same bad
-afternoon. They are not wrong to be lost: the file they want is usually right
-there, four rows down, behind a name written for somebody else.
-
 On a repository's page it detects your operating system and processor, reads
 the repository's GitHub Releases, and points at the file you most likely need:
 
@@ -18,10 +14,8 @@ the repository's GitHub Releases, and points at the file you most likely need:
 > **MyApp-4.2.1-setup-win64.exe** — Windows installer · 84.2 MB
 > **Download** · Why this file? · Other downloads
 
-It is just as willing to say "there is no ready-to-run Windows build here", or
-"this repository doesn't publish releases", because a confident wrong answer
-is worse than none. The recommendation is about file compatibility, not a
-security review of the project.
+It may also say "there is no ready-to-run Windows build here", or "this repository doesn't publish releases". The recommendation is about file
+compatibility, not a security review of the project.
 
 ![The panel on a repository home page](docs/screenshot-recommendation.png)
 
