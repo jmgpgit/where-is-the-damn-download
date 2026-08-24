@@ -1,0 +1,30 @@
+{
+  "name": "13-macos-user-gets-dmg",
+  "platform": {
+    "os": "macos",
+    "arch": "arm64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-macos-universal.dmg",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-win64-setup.exe",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-linux-x86_64.AppImage",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-macos-universal.dmg",
+    "confidence": "high",
+    "excludedCount": 2
+  }
+}

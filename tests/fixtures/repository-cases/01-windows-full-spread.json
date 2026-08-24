@@ -1,0 +1,35 @@
+{
+  "name": "01-windows-full-spread",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-windows-x64-setup.exe",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-macos-universal.dmg",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-linux-x86_64.AppImage",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-checksums.sha256",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-windows-x64-setup.exe",
+    "confidence": "high",
+    "excludedCount": 3
+  }
+}

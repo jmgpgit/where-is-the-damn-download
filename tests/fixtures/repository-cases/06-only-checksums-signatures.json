@@ -1,0 +1,30 @@
+{
+  "name": "06-only-checksums-signatures",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-checksums.sha256",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo.sig",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo.asc",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": null,
+    "confidence": "none",
+    "excludedCount": 3
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "05-cli-vs-gui",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-gui-win64-setup.exe",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-cli-win64.zip",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-gui-win64-setup.exe",
+    "confidence": "high",
+    "excludedCount": 0
+  }
+}

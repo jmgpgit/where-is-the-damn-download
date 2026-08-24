@@ -1,0 +1,27 @@
+{
+  "name": "03-installer-vs-portable",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {
+    "packagePreference": "installer"
+  },
+  "assets": [
+    {
+      "name": "foo-win64-setup.exe",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-win64-portable.zip",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-win64-setup.exe",
+    "confidence": "high",
+    "excludedCount": 0
+  }
+}

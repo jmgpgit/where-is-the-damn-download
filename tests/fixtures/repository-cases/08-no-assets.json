@@ -1,0 +1,14 @@
+{
+  "name": "08-no-assets",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [],
+  "expect": {
+    "primaryName": null,
+    "confidence": "none",
+    "excludedCount": 0
+  }
+}

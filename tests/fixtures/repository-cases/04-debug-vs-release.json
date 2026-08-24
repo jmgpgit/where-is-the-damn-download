@@ -1,0 +1,25 @@
+{
+  "name": "04-debug-vs-release",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-win64.exe",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-win64-debug.exe",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-win64.exe",
+    "confidence": "high",
+    "excludedCount": 0
+  }
+}

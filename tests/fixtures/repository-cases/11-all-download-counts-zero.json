@@ -1,0 +1,25 @@
+{
+  "name": "11-all-download-counts-zero",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-win64-setup.exe",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-linux-x86_64.AppImage",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-win64-setup.exe",
+    "confidence": "high",
+    "excludedCount": 1
+  }
+}

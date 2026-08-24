@@ -1,0 +1,25 @@
+{
+  "name": "12-popularity-never-flips-incompatibility",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-macos-universal.dmg",
+      "size": 1000,
+      "downloadCount": 999999
+    },
+    {
+      "name": "foo-win64.zip",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-win64.zip",
+    "confidence": "medium",
+    "excludedCount": 1
+  }
+}

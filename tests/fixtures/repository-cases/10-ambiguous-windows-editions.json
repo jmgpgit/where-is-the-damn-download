@@ -1,0 +1,25 @@
+{
+  "name": "10-ambiguous-windows-editions",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-win64-home.zip",
+      "size": 1000,
+      "downloadCount": 10
+    },
+    {
+      "name": "foo-win64-pro.zip",
+      "size": 1000,
+      "downloadCount": 10
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-win64-home.zip",
+    "confidence": "low",
+    "excludedCount": 0
+  }
+}

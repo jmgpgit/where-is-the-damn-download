@@ -1,0 +1,30 @@
+{
+  "name": "02-windows-arch-variants",
+  "platform": {
+    "os": "windows",
+    "arch": "x64"
+  },
+  "preferences": {},
+  "assets": [
+    {
+      "name": "foo-win-x64.msi",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-win-x86.msi",
+      "size": 1000,
+      "downloadCount": 0
+    },
+    {
+      "name": "foo-win-arm64.msi",
+      "size": 1000,
+      "downloadCount": 0
+    }
+  ],
+  "expect": {
+    "primaryName": "foo-win-x64.msi",
+    "confidence": "high",
+    "excludedCount": 1
+  }
+}
