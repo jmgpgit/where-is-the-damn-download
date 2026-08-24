@@ -5,7 +5,12 @@
 
 import type { ClassifiedAsset, Confidence, UserPreferences } from './asset-types';
 
-const PRIMARY_CATEGORIES: ReadonlySet<string> = new Set(['os', 'architecture', 'format', 'preference']);
+/**
+ * Why this file, not what you asked for. The preference clause is left out on
+ * purpose: "is a standard installer, and is an installer, which you prefer"
+ * says the same thing twice, and the setting is on screen anyway.
+ */
+const PRIMARY_CATEGORIES: ReadonlySet<string> = new Set(['os', 'architecture', 'format']);
 
 function joinClauses(clauses: readonly string[]): string {
   if (clauses.length <= 1) return clauses[0] ?? '';

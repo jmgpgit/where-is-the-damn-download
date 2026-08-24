@@ -28,11 +28,21 @@ type RepoContext = Exclude<GitHubPageContext, { kind: 'unsupported' }>;
 
 /** What the observer restores: same route, and the panel (when owed) present. */
 let settled = { route: '', mounted: false };
+/**
+ * The route a run is currently waiting on. GitHub's repository home renders
+ * with React and never stops mutating, so without this the observer keeps
+ * deciding the page is unsettled while the first request is still in flight,
+ * bumps the generation, and every run is cancelled by its own successor —
+ * the panel never mounts at all.
+ */
+let pendingRoute: string | null = null;
 /** Source-archive notes owed on this route; re-applied as GitHub lazy-loads assets. */
 let annotationOwed: { owner: string; repo: string } | null = null;
 
 function isSettled(): boolean {
-  if (settled.route !== location.pathname) return false;
+  const path = location.pathname;
+  if (pendingRoute === path) return true;
+  if (settled.route !== path) return false;
   if (!settled.mounted) return true;
   return findExistingMount()?.isConnected === true;
 }
@@ -174,7 +184,13 @@ async function run(generation: number, current: () => number, forceRefresh = fal
     return;
   }
 
-  const state = await requestState(context, forceRefresh);
+  pendingRoute = route;
+  let state: StateReply;
+  try {
+    state = await requestState(context, forceRefresh);
+  } finally {
+    if (pendingRoute === route) pendingRoute = null;
+  }
   if (current() !== generation) return; // navigated away while waiting
 
   if (state === null) {
