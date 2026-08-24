@@ -16,6 +16,7 @@ export interface TokenizedName {
 
 // Checked before single extensions so `.tar.gz` wins over `.gz`.
 const COMPOUND_EXTENSIONS: readonly string[] = [
+  '.sigstore.json',
   '.spdx.json',
   '.cdx.json',
   '.dsym.zip',

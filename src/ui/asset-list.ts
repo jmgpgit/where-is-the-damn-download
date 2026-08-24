@@ -68,9 +68,9 @@ function assetItem(
   }
 
   if (opts.recommended) {
-    const mark = doc.createElement('strong');
-    mark.textContent = '★';
-    mark.setAttribute('aria-label', 'Recommended');
+    const mark = doc.createElement('span');
+    mark.className = 'wtd-badge';
+    mark.textContent = LABELS.recommendedBadge;
     line.append(mark);
   }
 

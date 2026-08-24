@@ -158,6 +158,30 @@ describe('release-service', () => {
     });
   });
 
+  it('does not claim "no releases" when the follow-up list probe fails', async () => {
+    let fetchImpl = fakeFetch([empty(404), empty(500)]);
+    expect(await getRelease(deps(fetchImpl), 'o', 'r', { kind: 'latest' })).toEqual({
+      status: 'github-error',
+    });
+
+    resetForTests();
+    area = fakeArea();
+    fetchImpl = fakeFetch([
+      empty(404),
+      () => new Response('not json', { status: 200 }),
+      empty(404),
+      json([releaseJson('v2.0.0-beta', true)]),
+    ]);
+    expect(await getRelease(deps(fetchImpl), 'o', 'r', { kind: 'latest' })).toEqual({
+      status: 'invalid-response',
+    });
+    // Nothing was negative-cached: the next run asks again and gets the truth.
+    expect(await getRelease(deps(fetchImpl), 'o', 'r', { kind: 'latest' })).toEqual({
+      status: 'no-stable-release',
+      prereleaseAvailable: true,
+    });
+  });
+
   it('treats a missing tag as no release for that route', async () => {
     const fetchImpl = fakeFetch([empty(404)]);
     const result = await getRelease(deps(fetchImpl), 'o', 'r', { kind: 'tag', tag: 'nope/v1' });

@@ -96,7 +96,13 @@ function metaLine(
   const platformLabel = platform.overridden
     ? `${describePlatform(platform.os, platform.arch)} (chosen by you)`
     : describePlatform(platform.os, platform.arch);
-  const releaseWord = viewingTag ? LABELS.release : LABELS.latestStable;
+  // Wording follows the release, not the route: the prerelease channel can
+  // surface an rc on the repo home, which must never read as "stable".
+  const releaseWord = release.prerelease
+    ? LABELS.latestPrerelease
+    : viewingTag
+      ? LABELS.release
+      : LABELS.latestStable;
   meta.textContent = `${LABELS.detected}: ${platformLabel} · ${releaseWord}: ${release.tagName}`;
   return meta;
 }
@@ -171,7 +177,7 @@ function renderRecommendation(
   fragment.append(el(doc, 'h2', 'wtd-heading', HEADINGS[recommendation.confidence]));
   fragment.append(metaLine(doc, platform, release, viewingTag));
 
-  if (viewingTag && release.prerelease) {
+  if (release.prerelease) {
     fragment.append(el(doc, 'div', 'wtd-warning', STATES.prereleaseNotice));
   }
   if (stale) {

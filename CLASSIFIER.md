@@ -45,10 +45,13 @@ architecture token exists.
 
 Hard-excluded (never primary, never an alternative): source archives
 (`source`, `src`, `source-code`), checksums (`sha256`, `sha512`, `md5`,
-`checksums`, `sums`), signatures (`sig`, `asc`, `gpg`, `cosign`, `minisig`),
-provenance/attestation/SBOM (`spdx`, `cyclonedx`, `sbom`, `intoto`), symbols
-(`symbols`, `pdb`, `dsym`), updater metadata (`latest.yml`, `update.yaml`,
-`.blockmap`, appcast), and zero-byte assets.
+`checksums`, `sums`, list names like `SHA256SUMS`/`SHASUMS256.txt`, and
+`.sha1`/`.sha256sum`-style extensions), signatures (`sig`, `asc`, `gpg`,
+`cosign`, `minisig`, `.pem`, `.sigstore.json`), provenance/attestation/SBOM
+(`spdx`, `cyclonedx`, `sbom`, `intoto`), symbols (`symbols`, `.pdb`, `dsym`),
+updater metadata (`latest.yml`, `update.yaml`, `.blockmap`, appcast, Squirrel's
+bare `RELEASES`), and zero-byte assets. Package-manager payloads (`.nupkg`,
+`.whl`, `.crate`) stay eligible but carry the `sdk` penalty.
 
 Penalized but eligible: `sdk` −70, `debug` −50, `nightly`/`canary`/
 `experimental` −45 on the stable channel, `server`/`headless` −20,

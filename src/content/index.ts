@@ -11,12 +11,13 @@ import { debug } from '../shared/logging';
 import type {
   BackgroundResponse,
   ExtensionSettings,
+  PanelSurface,
   ReleaseInfo,
   ReleaseSelector,
   StateResponse,
 } from '../shared/messages';
 import { renderPanel, type PanelHandlers, type PanelView } from '../ui/recommendation-card';
-import { HEADINGS, STATES } from '../ui/strings';
+import { HEADINGS, MOUNT_ATTR, STATES } from '../ui/strings';
 import { getPageContext } from './github-context';
 import { findExistingMount, mountPanel, unmountPanel } from './mount';
 import { observeRoutes } from './route-observer';
@@ -27,11 +28,19 @@ type RepoContext = Exclude<GitHubPageContext, { kind: 'unsupported' }>;
 
 /** What the observer restores: same route, and the panel (when owed) present. */
 let settled = { route: '', mounted: false };
+/** Source-archive notes owed on this route; re-applied as GitHub lazy-loads assets. */
+let annotationOwed: { owner: string; repo: string } | null = null;
 
 function isSettled(): boolean {
   if (settled.route !== location.pathname) return false;
   if (!settled.mounted) return true;
   return findExistingMount()?.isConnected === true;
+}
+
+function annotateIfOwed(): void {
+  if (annotationOwed && settled.route === location.pathname) {
+    annotateSourceArchives(annotationOwed.owner, annotationOwed.repo);
+  }
 }
 
 function selectorFor(context: RepoContext): ReleaseSelector {
@@ -40,19 +49,25 @@ function selectorFor(context: RepoContext): ReleaseSelector {
     : { kind: 'latest' };
 }
 
-async function requestState(
-  context: RepoContext,
-  forceRefresh: boolean
-): Promise<StateResponse | null> {
+function surfaceFor(context: RepoContext): PanelSurface {
+  return context.kind === 'repository-home' ? 'home' : 'release';
+}
+
+type StateReply = StateResponse | 'disabled' | null;
+
+async function requestState(context: RepoContext, forceRefresh: boolean): Promise<StateReply> {
   try {
     const response = (await ext.runtime.sendMessage({
       type: 'get-state',
       owner: context.owner,
       repo: context.repo,
       selector: selectorFor(context),
+      surface: surfaceFor(context),
       forceRefresh,
     })) as BackgroundResponse | undefined;
-    return response?.type === 'state' ? response.state : null;
+    if (response?.type === 'state') return response.state;
+    if (response?.type === 'disabled') return 'disabled';
+    return null;
   } catch (error) {
     debug('get-state failed', error);
     return null;
@@ -130,9 +145,22 @@ function buildView(context: RepoContext, state: StateResponse): PanelView {
   }
 }
 
+/** Only the fields the user changed, so a save cannot clobber another surface's edits. */
+function settingsPatch(
+  before: ExtensionSettings,
+  after: ExtensionSettings
+): Partial<ExtensionSettings> {
+  const patch: Record<string, unknown> = {};
+  for (const key of Object.keys(after) as (keyof ExtensionSettings)[]) {
+    if (before[key] !== after[key]) patch[key] = after[key];
+  }
+  return patch as Partial<ExtensionSettings>;
+}
+
 async function run(generation: number, current: () => number, forceRefresh = false): Promise<void> {
   const context = getPageContext();
   const route = location.pathname;
+  annotationOwed = null;
 
   if (context.kind === 'unsupported') {
     unmountPanel();
@@ -142,16 +170,17 @@ async function run(generation: number, current: () => number, forceRefresh = fal
 
   const state = await requestState(context, forceRefresh);
   if (current() !== generation) return; // navigated away while waiting
-  if (!state) {
+
+  if (state === null) {
+    // Keep a panel that already belongs to this route; drop one left behind
+    // by the previous route rather than show the wrong repository's answer.
+    const existing = findExistingMount();
+    if (existing && existing.getAttribute(MOUNT_ATTR) !== route) unmountPanel();
     settled = { route, mounted: findExistingMount() !== null };
     return;
   }
 
-  const { settings } = state;
-  const onHome = context.kind === 'repository-home';
-  const wanted =
-    settings.enabled && (onHome ? settings.showOnRepositoryHome : settings.showOnReleasePages);
-  if (!wanted) {
+  if (state === 'disabled') {
     unmountPanel();
     settled = { route, mounted: false };
     return;
@@ -165,7 +194,7 @@ async function run(generation: number, current: () => number, forceRefresh = fal
 
   const handlers: PanelHandlers = {
     onSettingsChange(next) {
-      void saveSettingsAndRerun(next, current);
+      void saveSettingsAndRerun(settingsPatch(state.settings, next), current);
     },
     onRefresh() {
       void run(current(), current, true);
@@ -175,19 +204,26 @@ async function run(generation: number, current: () => number, forceRefresh = fal
   renderPanel(mounted.container, buildView(context, state), handlers);
   settled = { route, mounted: true };
 
-  if (!onHome && settings.showSourceWarnings && state.release.status === 'ok') {
-    annotateSourceArchives(context.owner, context.repo);
+  if (
+    context.kind !== 'repository-home' &&
+    state.settings.showSourceWarnings &&
+    state.release.status === 'ok'
+  ) {
+    annotationOwed = { owner: context.owner, repo: context.repo };
+    annotateIfOwed();
   }
 }
 
 async function saveSettingsAndRerun(
-  settings: ExtensionSettings,
+  patch: Partial<ExtensionSettings>,
   current: () => number
 ): Promise<void> {
-  try {
-    await ext.runtime.sendMessage({ type: 'save-settings', settings });
-  } catch (error) {
-    debug('save-settings failed', error);
+  if (Object.keys(patch).length > 0) {
+    try {
+      await ext.runtime.sendMessage({ type: 'save-settings', patch });
+    } catch (error) {
+      debug('save-settings failed', error);
+    }
   }
   void run(current(), current);
 }
@@ -195,7 +231,11 @@ async function saveSettingsAndRerun(
 // The first callback fires synchronously inside observeRoutes, so the
 // generation is tracked in a local rather than via the returned handle.
 let latestGeneration = 0;
-observeRoutes((generation) => {
-  latestGeneration = generation;
-  void run(generation, () => latestGeneration);
-}, isSettled);
+observeRoutes(
+  (generation) => {
+    latestGeneration = generation;
+    void run(generation, () => latestGeneration);
+  },
+  isSettled,
+  annotateIfOwed
+);

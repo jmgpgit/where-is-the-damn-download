@@ -5,7 +5,9 @@
  * to both plus popstate, with a debounced MutationObserver as the fallback
  * that also notices when GitHub replaces the container holding our panel.
  *
- * No history.pushState monkey-patching, no permanent polling.
+ * Only the pathname counts as navigation: README anchor links change the
+ * hash without changing the page. No history.pushState monkey-patching, no
+ * permanent polling.
  */
 
 const NAV_EVENTS = ['turbo:render', 'turbo:load', 'soft-nav:end', 'popstate'] as const;
@@ -18,23 +20,25 @@ export interface RouteObserver {
 }
 
 /**
- * Calls back with a fresh generation whenever the location changes or the
- * page under `isMounted` loses our UI. The callback itself decides what (and
- * whether) to render; it must be idempotent.
+ * Calls back with a fresh generation whenever the path changes or the page
+ * under `isMounted` loses our UI. `onSettled` runs after any burst of DOM
+ * activity that did not amount to either, for cheap idempotent touch-ups
+ * (GitHub lazy-loads release assets after our first pass).
  */
 export function observeRoutes(
   callback: (generation: number) => void,
   isMounted: () => boolean,
+  onSettled?: () => void,
   win: Window = window
 ): RouteObserver {
   let generation = 0;
-  let lastHref = '';
+  let lastPath = '';
   let debounceTimer: number | undefined;
   let stopped = false;
 
   const fire = () => {
     if (stopped) return;
-    lastHref = win.location.href;
+    lastPath = win.location.pathname;
     generation += 1;
     callback(generation);
   };
@@ -43,7 +47,8 @@ export function observeRoutes(
     win.clearTimeout(debounceTimer);
     debounceTimer = win.setTimeout(() => {
       if (stopped) return;
-      if (win.location.href !== lastHref || !isMounted()) fire();
+      if (win.location.pathname !== lastPath || !isMounted()) fire();
+      else onSettled?.();
     }, DEBOUNCE_MS);
   };
 

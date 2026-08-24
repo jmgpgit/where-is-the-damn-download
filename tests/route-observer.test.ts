@@ -43,6 +43,19 @@ describe('observeRoutes', () => {
     expect(calls).toEqual([1]);
   });
 
+  it('ignores hash-only changes and reports them as settled', () => {
+    const calls: number[] = [];
+    const settled = vi.fn();
+    observer = observeRoutes((g) => calls.push(g), () => true, settled);
+
+    history.pushState({}, '', `${location.pathname}#installation`);
+    window.dispatchEvent(new Event('popstate'));
+    vi.advanceTimersByTime(300);
+
+    expect(calls).toEqual([1]);
+    expect(settled).toHaveBeenCalledTimes(1);
+  });
+
   it('refires when the mounted UI disappears', () => {
     const calls: number[] = [];
     let mounted = true;

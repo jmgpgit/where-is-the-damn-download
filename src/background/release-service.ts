@@ -195,22 +195,29 @@ async function handleNotFound(
   }
 
   const outcome = await fetchReleaseList(deps.fetchImpl, owner, repo);
-  if (outcome.kind === 'ok') {
-    const validated = validateReleaseList(outcome.json, owner, repo);
-    const releases = validated.ok ? validated.value : [];
-    if (releases.length === 0) {
-      await storeNegative(deps.area, key, 'no-releases', deps.now());
-      return { status: 'no-releases' };
+  switch (outcome.kind) {
+    case 'ok': {
+      const validated = validateReleaseList(outcome.json, owner, repo);
+      if (!validated.ok) return { status: 'invalid-response' };
+      if (validated.value.length === 0) {
+        await storeNegative(deps.area, key, 'no-releases', deps.now());
+        return { status: 'no-releases' };
+      }
+      await storeNegative(deps.area, key, 'no-stable-release', deps.now(), true);
+      return { status: 'no-stable-release', prereleaseAvailable: true };
     }
-    await storeNegative(deps.area, key, 'no-stable-release', deps.now(), true);
-    return { status: 'no-stable-release', prereleaseAvailable: true };
+    case 'not-found':
+      await storeNegative(deps.area, key, 'repo-not-found', deps.now());
+      return { status: 'repo-not-found' };
+    case 'rate-limited':
+      return { status: 'rate-limited', resetAt: outcome.resetAt };
+    case 'server-error':
+      return { status: 'github-error' };
+    case 'network-error':
+      return { status: 'network-error' };
+    case 'not-modified':
+    case 'invalid-json':
+      // Only "no stable release" is known at this point; say no more than that.
+      return { status: 'invalid-response' };
   }
-  if (outcome.kind === 'not-found') {
-    await storeNegative(deps.area, key, 'repo-not-found', deps.now());
-    return { status: 'repo-not-found' };
-  }
-  if (outcome.kind === 'rate-limited') {
-    return { status: 'rate-limited', resetAt: outcome.resetAt };
-  }
-  return { status: 'no-releases' };
 }

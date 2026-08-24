@@ -65,6 +65,9 @@ export interface ExtensionSettings {
   showOnReleasePages: boolean;
 }
 
+/** Which page surface is asking; lets the background skip work when the panel is off. */
+export type PanelSurface = 'home' | 'release';
+
 // --- protocol ----------------------------------------------------------------
 
 export type BackgroundRequest =
@@ -73,10 +76,12 @@ export type BackgroundRequest =
       owner: string;
       repo: string;
       selector: ReleaseSelector;
+      surface: PanelSurface;
       /** Bypass the fresh-cache window (still throttled by the background). */
       forceRefresh?: boolean;
     }
-  | { type: 'save-settings'; settings: ExtensionSettings };
+  /** A patch merged onto freshly loaded settings, so two surfaces cannot clobber each other. */
+  | { type: 'save-settings'; patch: Partial<ExtensionSettings> };
 
 export interface StateResponse {
   settings: ExtensionSettings;
@@ -86,6 +91,7 @@ export interface StateResponse {
 
 export type BackgroundResponse =
   | { type: 'state'; state: StateResponse }
+  | { type: 'disabled'; settings: ExtensionSettings }
   | { type: 'settings-saved'; settings: ExtensionSettings }
   | { type: 'bad-request' };
 
@@ -150,23 +156,37 @@ const ARCH_VALUES = new Set([
   'unknown',
 ]);
 
+const isBoolean = (v: unknown): boolean => typeof v === 'boolean';
+const oneOf =
+  (...allowed: string[]) =>
+  (v: unknown): boolean =>
+    typeof v === 'string' && allowed.includes(v);
+
+const FIELD_CHECKS: Record<keyof ExtensionSettings, (v: unknown) => boolean> = {
+  enabled: isBoolean,
+  mode: oneOf('simple', 'advanced'),
+  operatingSystemOverride: (v) => typeof v === 'string' && OS_VALUES.has(v),
+  architectureOverride: (v) => typeof v === 'string' && ARCH_VALUES.has(v),
+  packagePreference: oneOf('installer', 'portable', 'none'),
+  releaseChannel: oneOf('stable', 'include-prerelease'),
+  showSourceWarnings: isBoolean,
+  showOnRepositoryHome: isBoolean,
+  showOnReleasePages: isBoolean,
+};
+
+const SETTINGS_FIELDS = Object.keys(FIELD_CHECKS) as (keyof ExtensionSettings)[];
+
 export function isValidSettings(value: unknown): value is ExtensionSettings {
   if (typeof value !== 'object' || value === null) return false;
   const v = value as Record<string, unknown>;
-  return (
-    typeof v['enabled'] === 'boolean' &&
-    (v['mode'] === 'simple' || v['mode'] === 'advanced') &&
-    typeof v['operatingSystemOverride'] === 'string' &&
-    OS_VALUES.has(v['operatingSystemOverride']) &&
-    typeof v['architectureOverride'] === 'string' &&
-    ARCH_VALUES.has(v['architectureOverride']) &&
-    (v['packagePreference'] === 'installer' ||
-      v['packagePreference'] === 'portable' ||
-      v['packagePreference'] === 'none') &&
-    (v['releaseChannel'] === 'stable' || v['releaseChannel'] === 'include-prerelease') &&
-    typeof v['showSourceWarnings'] === 'boolean' &&
-    typeof v['showOnRepositoryHome'] === 'boolean' &&
-    typeof v['showOnReleasePages'] === 'boolean'
+  return SETTINGS_FIELDS.every((field) => FIELD_CHECKS[field](v[field]));
+}
+
+export function isValidSettingsPatch(value: unknown): value is Partial<ExtensionSettings> {
+  if (typeof value !== 'object' || value === null) return false;
+  return Object.entries(value).every(
+    ([key, v]) =>
+      Object.hasOwn(FIELD_CHECKS, key) && FIELD_CHECKS[key as keyof ExtensionSettings](v)
   );
 }
 
@@ -181,6 +201,7 @@ export function parseBackgroundRequest(message: unknown): BackgroundRequest | nu
       typeof m['repo'] === 'string' &&
       isValidRepo(m['repo']) &&
       isSelector(m['selector']) &&
+      (m['surface'] === 'home' || m['surface'] === 'release') &&
       (m['forceRefresh'] === undefined || typeof m['forceRefresh'] === 'boolean')
     ) {
       const request: BackgroundRequest = {
@@ -188,14 +209,15 @@ export function parseBackgroundRequest(message: unknown): BackgroundRequest | nu
         owner: m['owner'],
         repo: m['repo'],
         selector: m['selector'],
+        surface: m['surface'],
       };
       if (typeof m['forceRefresh'] === 'boolean') request.forceRefresh = m['forceRefresh'];
       return request;
     }
     return null;
   }
-  if (m['type'] === 'save-settings' && isValidSettings(m['settings'])) {
-    return { type: 'save-settings', settings: m['settings'] };
+  if (m['type'] === 'save-settings' && isValidSettingsPatch(m['patch'])) {
+    return { type: 'save-settings', patch: { ...m['patch'] } };
   }
   return null;
 }

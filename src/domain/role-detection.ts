@@ -5,12 +5,15 @@
 
 import type { OperatingSystem, PackageKind } from './asset-types';
 import {
+  CHECKSUM_TOKEN_PATTERN,
+  DEVELOPER_PACKAGE_EXTENSIONS,
   FORMAT_WEIGHT,
   HARD_ROLE_EXTENSIONS,
   HARD_ROLE_TOKEN_ALIASES,
   INSTALLER_WORDS,
   PENALIZED_ROLE_ALIASES,
   PORTABLE_WORD_ALIASES,
+  UPDATER_MANIFEST_NAMES,
   type HardRole,
   type PenalizedRole,
 } from './rules';
@@ -36,7 +39,10 @@ export function detectRoles(t: TokenizedName, size: number): RoleDetection {
       }
     }
   }
-  // electron-updater / squirrel manifests: latest.yml, app-update.yaml
+  if (hardRole === null && t.tokens.some((token) => CHECKSUM_TOKEN_PATTERN.test(token))) {
+    hardRole = 'checksum';
+  }
+  // electron-updater / squirrel manifests: latest.yml, app-update.yaml, RELEASES
   if (
     hardRole === null &&
     (t.extension === '.yml' || t.extension === '.yaml') &&
@@ -44,10 +50,21 @@ export function detectRoles(t: TokenizedName, size: number): RoleDetection {
   ) {
     hardRole = 'updater-metadata';
   }
+  if (
+    hardRole === null &&
+    t.extension === '' &&
+    t.tokens.length === 1 &&
+    UPDATER_MANIFEST_NAMES.includes(t.tokens[0] ?? '')
+  ) {
+    hardRole = 'updater-metadata';
+  }
 
   const penalized: PenalizedRole[] = [];
   for (const [role, alias] of PENALIZED_ROLE_ALIASES) {
     if (!penalized.includes(role) && hasSequence(t.tokens, alias)) penalized.push(role);
+  }
+  if (DEVELOPER_PACKAGE_EXTENSIONS.includes(t.extension) && !penalized.includes('sdk')) {
+    penalized.push('sdk');
   }
   const cli = t.tokens.includes('cli');
   const portable = PORTABLE_WORD_ALIASES.some((alias) => hasSequence(t.tokens, alias));

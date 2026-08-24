@@ -64,8 +64,13 @@ async function main(): Promise<void> {
 
   let statusTimer: ReturnType<typeof setTimeout> | undefined;
   const update = (next: Partial<ExtensionSettings>) => {
-    settings = { ...settings, ...next };
-    void saveSettings(ext.storage.sync, settings).then(() => {
+    // Re-read before merging: the in-page panel may have saved meanwhile.
+    void loadSettings(ext.storage.sync)
+      .then((current) => {
+        settings = { ...current, ...next };
+        return saveSettings(ext.storage.sync, settings);
+      })
+      .then(() => {
       status.textContent = 'Saved.';
       clearTimeout(statusTimer);
       statusTimer = setTimeout(() => {

@@ -113,6 +113,7 @@ export const HARD_ROLE_TOKEN_ALIASES: ReadonlyArray<readonly [HardRole, AliasSeq
   ['signature', ['gpg']],
   ['signature', ['cosign']],
   ['signature', ['minisig']],
+  ['signature', ['sigstore']],
   ['sbom', ['spdx']],
   ['sbom', ['cyclonedx']],
   ['sbom', ['sbom']],
@@ -126,17 +127,34 @@ export const HARD_ROLE_TOKEN_ALIASES: ReadonlyArray<readonly [HardRole, AliasSeq
 ];
 
 export const HARD_ROLE_EXTENSIONS: Readonly<Record<string, HardRole>> = {
+  '.sha1': 'checksum',
   '.sha256': 'checksum',
   '.sha512': 'checksum',
   '.md5': 'checksum',
+  '.sha1sum': 'checksum',
+  '.sha256sum': 'checksum',
+  '.sha512sum': 'checksum',
+  '.md5sum': 'checksum',
   '.sig': 'signature',
   '.asc': 'signature',
   '.minisig': 'signature',
+  '.pem': 'signature',
+  '.sigstore.json': 'signature',
   '.spdx.json': 'sbom',
   '.cdx.json': 'sbom',
+  '.pdb': 'symbols',
   '.dsym.zip': 'symbols',
   '.blockmap': 'updater-metadata',
 };
+
+/** Whole stem tokens that name a checksum list: SHA256SUMS, SHASUMS256, md5sums… */
+export const CHECKSUM_TOKEN_PATTERN = /^(?:sha\d*sums?|shasums?\d*|md5sums?|checksums?|b2sums?)$/;
+
+/** Squirrel's bare `RELEASES` manifest: no extension, exactly this name. */
+export const UPDATER_MANIFEST_NAMES: readonly string[] = ['releases'];
+
+/** Package-manager payloads (NuGet, wheel, crate): developer material, not a beginner download. */
+export const DEVELOPER_PACKAGE_EXTENSIONS: readonly string[] = ['.nupkg', '.whl', '.crate'];
 
 /** Still eligible, but pushed down. `nightly` only bites on the stable channel. */
 export const ROLE_PENALTIES = {

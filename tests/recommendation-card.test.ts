@@ -143,6 +143,26 @@ describe('renderPanel', () => {
     expect(text).toContain('prerelease');
   });
 
+  it('never calls a prerelease "stable", even off the tag page', () => {
+    const v = view(recommendation({}));
+    renderPanel(
+      container,
+      { ...v, viewingTag: false, release: { ...v.release, prerelease: true } },
+      handlers
+    );
+    const meta = container.querySelector('.wtd-meta')?.textContent ?? '';
+    expect(meta).not.toContain('stable');
+    expect(meta).toContain('prerelease');
+    expect(container.textContent).toContain('You are viewing a prerelease');
+  });
+
+  it('marks the recommended asset in the list with visible text', () => {
+    renderPanel(container, view(recommendation({})), handlers);
+    const badge = container.querySelector('.wtd-badge');
+    expect(badge?.textContent).toBe('Recommended');
+    expect(badge?.hasAttribute('aria-label')).toBe(false);
+  });
+
   it('renders status states with controls', () => {
     renderPanel(
       container,

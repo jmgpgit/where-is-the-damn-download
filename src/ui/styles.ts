@@ -167,6 +167,15 @@ export const PANEL_CSS = `
   color: var(--wtd-fg-muted);
 }
 
+.wtd-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--wtd-accent);
+  color: var(--wtd-accent-fg);
+}
+
 .wtd-excluded {
   opacity: 0.75;
 }

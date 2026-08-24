@@ -38,12 +38,13 @@ content script ──message──▶ background ──fetch──▶ api.github
 ## Message flow
 
 ```text
-content: get-state {owner, repo, selector: latest | tag}
-background: validate shape → settings → getPlatformInfo → normalize/override
+content: get-state {owner, repo, selector: latest | tag, surface: home | release}
+background: validate shape → settings → panel off for this surface? ⇒ {disabled}
+            → getPlatformInfo → normalize/override
             → (latest + include-prerelease setting ⇒ list endpoint)
             → release-service → {settings, platform, release}
 content: recommend() → renderPanel()
-content: save-settings {settings} → background writes storage.sync → content re-runs
+content: save-settings {patch} → background merges onto fresh settings → content re-runs
 ```
 
 The content script never sends URLs. The background builds every API URL

@@ -6,6 +6,7 @@
 
 import { ext } from '../shared/browser-api';
 import {
+  isValidSettings,
   parseBackgroundRequest,
   type BackgroundRequest,
   type BackgroundResponse,
@@ -40,11 +41,21 @@ ext.action.onClicked.addListener(() => {
 
 async function handle(request: BackgroundRequest): Promise<BackgroundResponse> {
   if (request.type === 'save-settings') {
-    await saveSettings(ext.storage.sync, request.settings);
-    return { type: 'settings-saved', settings: request.settings };
+    // Merge onto what is stored now, not onto the sender's snapshot.
+    const merged = { ...(await loadSettings(ext.storage.sync)), ...request.patch };
+    if (!isValidSettings(merged)) return { type: 'bad-request' };
+    await saveSettings(ext.storage.sync, merged);
+    return { type: 'settings-saved', settings: merged };
   }
 
   const settings = await loadSettings(ext.storage.sync);
+  const wanted =
+    settings.enabled &&
+    (request.surface === 'home' ? settings.showOnRepositoryHome : settings.showOnReleasePages);
+  // No panel means no API request: a switched-off extension must not spend
+  // the unauthenticated quota.
+  if (!wanted) return { type: 'disabled', settings };
+
   const info = await ext.runtime.getPlatformInfo();
   const platform = resolvePlatform(normalizePlatform(info), settings);
 

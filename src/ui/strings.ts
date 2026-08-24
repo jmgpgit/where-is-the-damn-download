@@ -59,6 +59,8 @@ export const LABELS = {
   detected: 'Detected',
   release: 'Release',
   latestStable: 'Latest stable release',
+  latestPrerelease: 'Latest release (prerelease)',
+  recommendedBadge: 'Recommended',
   refresh: 'Refresh',
   settings: 'Options',
   advancedMode: 'Advanced details',
