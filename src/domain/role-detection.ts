@@ -5,6 +5,7 @@
 
 import type { OperatingSystem, PackageKind } from './asset-types';
 import {
+  BARE_BINARY_OS_TOKENS,
   CHECKSUM_TOKEN_PATTERN,
   DEVELOPER_PACKAGE_EXTENSIONS,
   FORMAT_WEIGHT,
@@ -15,6 +16,8 @@ import {
   PENALIZED_ROLE_ALIASES,
   PORTABLE_WORD_ALIASES,
   SCRIPT_EXTENSIONS,
+  TRIPLE_SYSTEM_TOKENS,
+  TRIPLE_VENDOR_TOKENS,
   UPDATER_MANIFEST_NAMES,
   type HardRole,
   type PenalizedRole,
@@ -27,6 +30,8 @@ export interface RoleDetection {
   hardRole: HardRole | null;
   penalized: PenalizedRole[];
   cli: boolean;
+  /** Packaged the way command-line tools are packaged; a hint, not a fact. */
+  cliShaped: boolean;
   portable: boolean;
 }
 
@@ -71,14 +76,36 @@ export function detectRoles(t: TokenizedName, size: number): RoleDetection {
   }
   if (t.extension in SCRIPT_EXTENSIONS) penalized.push('script');
   const cli = t.tokens.includes('cli');
+  const cliShaped = !cli && looksLikeCommandLineTool(t);
   const portable = PORTABLE_WORD_ALIASES.some((alias) => hasSequence(t.tokens, alias));
 
   const roles: string[] = [];
   if (hardRole !== null) roles.push(hardRole);
   roles.push(...penalized);
   if (cli) roles.push('cli');
+  if (cliShaped) roles.push('cli-shaped');
   if (portable) roles.push('portable');
-  return { roles, hardRole, penalized, cli, portable };
+  return { roles, hardRole, penalized, cli, cliShaped, portable };
+}
+
+/**
+ * A Rust target triple (`<arch>-<vendor>-<system>`) or an extension-less binary
+ * named after its OS (`yt-dlp_linux`). Both are command-line packaging habits;
+ * neither is proof, so callers only ever phrase this as "looks like".
+ */
+function looksLikeCommandLineTool(t: TokenizedName): boolean {
+  // The shape is <arch>-<vendor>-<os>[-<abi>], so the system word sits one or
+  // two tokens after the vendor: apple-darwin, pc-windows-msvc.
+  const hasTriple = t.tokens.some(
+    (token, i) =>
+      TRIPLE_VENDOR_TOKENS.includes(token) &&
+      (TRIPLE_SYSTEM_TOKENS.includes(t.tokens[i + 1] ?? '') ||
+        TRIPLE_SYSTEM_TOKENS.includes(t.tokens[i + 2] ?? '')),
+  );
+  if (hasTriple) return true;
+  // No extension at all, and the name ends in an OS word: `yt-dlp_macos`.
+  const last = t.tokens[t.tokens.length - 1] ?? '';
+  return t.extension === '' && BARE_BINARY_OS_TOKENS.includes(last);
 }
 
 const HARD_ROLE_KIND: Readonly<Record<HardRole, PackageKind>> = {

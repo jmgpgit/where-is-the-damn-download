@@ -182,6 +182,10 @@ export function classifyAsset(
       add('format-kind', 'format', 'positive', pkg.formatWeight, formatClause(kind));
       if (kind === 'java-archive') add('java-runtime', 'role', 'informational', 0, 'requires Java to be installed');
       if (roles.cli) add('role-cli', 'role', 'informational', 0, 'Command-line application — opens in a terminal');
+      // Packaging convention only, so it is phrased as a guess and costs nothing.
+      else if (roles.cliShaped) {
+        add('role-cli-shaped', 'role', 'informational', 0, 'looks like a command-line tool, not a window-based program');
+      }
       for (const role of roles.penalized) {
         if (role === 'nightly' && prefs.releaseChannel !== 'stable') continue;
         add(`role-${role}`, 'role', 'negative', ROLE_PENALTIES[role], PENALTY_CLAUSES[role]);

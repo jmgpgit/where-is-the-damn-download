@@ -53,6 +53,11 @@ export function buildWarnings(
   }
   if (primary.roles.includes('cli')) {
     warnings.push('Command-line application — opens in a terminal.');
+  } else if (primary.roles.includes('cli-shaped')) {
+    // Inferred from packaging, so it hedges and says what to expect either way.
+    warnings.push(
+      'This looks like a command-line tool: it probably opens a terminal window instead of a normal program window.',
+    );
   }
   if (primary.roles.includes('script')) {
     warnings.push('This is a script that runs in a terminal, not an installer.');

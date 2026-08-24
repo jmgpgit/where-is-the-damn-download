@@ -208,6 +208,35 @@ export const CHECKSUM_TOKEN_PATTERN = /^(?:sha\d*sums?|shasums?\d*|\d+sums?|md5s
 /** Squirrel's bare `RELEASES` manifest: no extension, exactly this name. */
 export const UPDATER_MANIFEST_NAMES: readonly string[] = ['releases'];
 
+/**
+ * Packaging conventions that belong to command-line tools, not desktop apps.
+ *
+ * A Rust target triple (`x86_64-pc-windows-msvc`, `aarch64-apple-darwin`) comes
+ * from cargo/cargo-dist, and a GUI application published that way is vanishingly
+ * rare. So is an extension-less binary named after its OS (`yt-dlp_linux`).
+ * Neither proves anything about the binary, hence the hedged wording: this only
+ * ever adds a note, never a penalty.
+ */
+export const TRIPLE_VENDOR_TOKENS: readonly string[] = ['pc', 'apple', 'unknown'];
+export const TRIPLE_SYSTEM_TOKENS: readonly string[] = [
+  'msvc',
+  'gnu',
+  'musl',
+  'gnueabihf',
+  'musleabihf',
+  'darwin',
+];
+
+/** An extension-less file ending in one of these is a raw binary: `yt-dlp_linux`. */
+export const BARE_BINARY_OS_TOKENS: readonly string[] = [
+  'linux',
+  'macos',
+  'darwin',
+  'osx',
+  'windows',
+  'win',
+];
+
 /** Package-manager payloads (NuGet, wheel, crate): developer material, not a beginner download. */
 export const DEVELOPER_PACKAGE_EXTENSIONS: readonly string[] = ['.nupkg', '.whl', '.crate'];
 
