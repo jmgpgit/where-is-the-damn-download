@@ -1,0 +1,112 @@
+{
+  "repo": "sharkdp/bat",
+  "tag": "v0.26.1",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "bat-musl_0.26.1_arm64.deb",
+      "size": 2910138,
+      "downloadCount": 3349
+    },
+    {
+      "name": "bat-musl_0.26.1_musl-linux-amd64.deb",
+      "size": 3074590,
+      "downloadCount": 5928
+    },
+    {
+      "name": "bat-musl_0.26.1_musl-linux-i686.deb",
+      "size": 3071596,
+      "downloadCount": 2083
+    },
+    {
+      "name": "bat-v0.26.1-aarch64-apple-darwin.tar.gz",
+      "size": 3216703,
+      "downloadCount": 47034
+    },
+    {
+      "name": "bat-v0.26.1-aarch64-pc-windows-msvc.zip",
+      "size": 3434291,
+      "downloadCount": 4306
+    },
+    {
+      "name": "bat-v0.26.1-aarch64-unknown-linux-gnu.tar.gz",
+      "size": 3345545,
+      "downloadCount": 42217
+    },
+    {
+      "name": "bat-v0.26.1-aarch64-unknown-linux-musl.tar.gz",
+      "size": 3383478,
+      "downloadCount": 28119
+    },
+    {
+      "name": "bat-v0.26.1-arm-unknown-linux-gnueabihf.tar.gz",
+      "size": 3380827,
+      "downloadCount": 2642
+    },
+    {
+      "name": "bat-v0.26.1-arm-unknown-linux-musleabihf.tar.gz",
+      "size": 3407734,
+      "downloadCount": 1938
+    },
+    {
+      "name": "bat-v0.26.1-i686-pc-windows-msvc.zip",
+      "size": 3367862,
+      "downloadCount": 3139
+    },
+    {
+      "name": "bat-v0.26.1-i686-unknown-linux-gnu.tar.gz",
+      "size": 3572280,
+      "downloadCount": 2051
+    },
+    {
+      "name": "bat-v0.26.1-i686-unknown-linux-musl.tar.gz",
+      "size": 3545941,
+      "downloadCount": 2285
+    },
+    {
+      "name": "bat-v0.26.1-x86_64-apple-darwin.tar.gz",
+      "size": 3367309,
+      "downloadCount": 5634
+    },
+    {
+      "name": "bat-v0.26.1-x86_64-pc-windows-msvc.zip",
+      "size": 3613318,
+      "downloadCount": 100526
+    },
+    {
+      "name": "bat-v0.26.1-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 3546574,
+      "downloadCount": 125308
+    },
+    {
+      "name": "bat-v0.26.1-x86_64-unknown-linux-musl.tar.gz",
+      "size": 3584928,
+      "downloadCount": 654121
+    },
+    {
+      "name": "bat_0.26.1_amd64.deb",
+      "size": 3037592,
+      "downloadCount": 28595
+    },
+    {
+      "name": "bat_0.26.1_arm64.deb",
+      "size": 2862796,
+      "downloadCount": 4267
+    },
+    {
+      "name": "bat_0.26.1_armhf.deb",
+      "size": 2908064,
+      "downloadCount": 2586
+    },
+    {
+      "name": "bat_0.26.1_i686.deb",
+      "size": 3087444,
+      "downloadCount": 1880
+    },
+    {
+      "name": "bat_0.26.1_musl-linux-armhf.deb",
+      "size": 2929440,
+      "downloadCount": 1829
+    }
+  ]
+}

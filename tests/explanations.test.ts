@@ -29,7 +29,7 @@ describe('explainPrimary', () => {
   });
 
   it('always yields a positive sentence for an eligible asset', () => {
-    for (const name of ['foo.zip', 'foo.exe', 'foo-sdk-windows-x64.zip', 'foo.txt']) {
+    for (const name of ['foo.zip', 'foo.exe', 'foo-sdk-windows-x64.zip', 'foo.tgz']) {
       expect(explainPrimary(classify(name))).toMatch(/^Recommended because it .+\.$/);
     }
   });

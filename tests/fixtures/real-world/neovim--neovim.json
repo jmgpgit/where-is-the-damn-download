@@ -1,0 +1,67 @@
+{
+  "repo": "neovim/neovim",
+  "tag": "v0.12.5",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "nvim-linux-arm64.appimage",
+      "size": 11356680,
+      "downloadCount": 544
+    },
+    {
+      "name": "nvim-linux-arm64.appimage.zsync",
+      "size": 39043,
+      "downloadCount": 20
+    },
+    {
+      "name": "nvim-linux-arm64.tar.gz",
+      "size": 11365971,
+      "downloadCount": 457
+    },
+    {
+      "name": "nvim-linux-x86_64.appimage",
+      "size": 11442680,
+      "downloadCount": 923
+    },
+    {
+      "name": "nvim-linux-x86_64.appimage.zsync",
+      "size": 39339,
+      "downloadCount": 106
+    },
+    {
+      "name": "nvim-linux-x86_64.tar.gz",
+      "size": 11401951,
+      "downloadCount": 3997
+    },
+    {
+      "name": "nvim-macos-arm64.tar.gz",
+      "size": 9634538,
+      "downloadCount": 689
+    },
+    {
+      "name": "nvim-macos-x86_64.tar.gz",
+      "size": 9843608,
+      "downloadCount": 140
+    },
+    {
+      "name": "nvim-win-arm64.msi",
+      "size": 12832828,
+      "downloadCount": 158
+    },
+    {
+      "name": "nvim-win-arm64.zip",
+      "size": 13004160,
+      "downloadCount": 65
+    },
+    {
+      "name": "nvim-win64.msi",
+      "size": 12460092,
+      "downloadCount": 3346
+    },
+    {
+      "name": "nvim-win64.zip",
+      "size": 12623588,
+      "downloadCount": 2656
+    }
+  ]
+}

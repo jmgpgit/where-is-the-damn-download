@@ -6,6 +6,7 @@ import type {
   AssetInput,
   Confidence,
   OperatingSystem,
+  Recommendation,
   UserPlatform,
   UserPreferences,
 } from '../src/domain/asset-types';
@@ -70,10 +71,58 @@ describe('recommend: regressions', () => {
   });
 
   it('checksums and signatures are never primary', () => {
-    const rec = recommend(assets('foo-checksums.sha256', 'foo.sig', 'foo.asc', 'foo.zip'), WIN_X64, PREFS);
-    expect(rec.primary?.name).toBe('foo.zip');
+    const rec = recommend(assets('foo-checksums.sha256', 'foo.sig', 'foo.asc', 'foo-win64.zip'), WIN_X64, PREFS);
+    expect(rec.primary?.name).toBe('foo-win64.zip');
     expect(rec.alternatives).toHaveLength(0);
     expect(recommend(assets('foo-checksums.sha256', 'foo.sig'), WIN_X64, PREFS).primary).toBeUndefined();
+  });
+
+  it('weak candidates (no OS evidence, generic archive or unknown) are listed but never primary', () => {
+    for (const name of ['foo.zip', 'foo-3.0.5.tar.gz', 'foo-x64.zip', 'foo-noarch.zip', 'foo']) {
+      const rec = recommend(assets(name), WIN_X64, PREFS);
+      expect(rec.primary, name).toBeUndefined();
+      expect(rec.confidence).toBe('none');
+      expect(names(rec.alternatives)).toEqual([name]);
+      expect(rec.summary).toContain('no ready-to-run download');
+    }
+  });
+
+  it('variant ties are settled by downloads and explained', () => {
+    const rec = recommend(
+      [asset('foo-x64-setup.exe', 1, { downloadCount: 5 }), asset('foo-x64-user-setup.exe', 2, { downloadCount: 500 })],
+      WIN_X64,
+      PREFS,
+    );
+    expect(rec.primary?.name).toBe('foo-x64-user-setup.exe');
+    expect(rec.confidence).not.toBe('low');
+    expect(rec.primary?.evidence.find((e) => e.ruleId === 'tie-downloads')?.explanation).toBe(
+      'Chosen over foo-x64-setup.exe because more people downloaded it.',
+    );
+    const plain = recommend(assets('foo-x64-setup.exe', 'foo-win64.zip'), WIN_X64, PREFS);
+    expect(plain.primary?.evidence.some((e) => e.ruleId === 'tie-downloads')).toBe(false);
+  });
+
+  it('foreign processors, iOS, metadata and scripts', () => {
+    const linux: UserPlatform = platform('linux', 'x64');
+    const rec = recommend(
+      assets('foo-s390x-linux.tar.gz', 'foo-ios.zip', 'README.md', 'dist-manifest.json', 'foo-installer.sh', 'foo-x86_64-linux.tar.gz'),
+      linux,
+      PREFS,
+    );
+    expect(rec.primary?.name).toBe('foo-x86_64-linux.tar.gz');
+    expect(names(rec.alternatives)).toEqual(['foo-installer.sh']);
+    expect(names(rec.excluded).sort()).toEqual(['README.md', 'dist-manifest.json', 'foo-ios.zip', 'foo-s390x-linux.tar.gz']);
+    const why = (r: Recommendation, n: string): string | undefined =>
+      r.excluded.find((a) => a.name === n)?.evidence.find((e) => e.effect === 'exclude')?.explanation;
+    expect(why(rec, 'foo-s390x-linux.tar.gz')).toBe('Not for this computer: this build is for a different kind of processor (s390x).');
+    expect(why(rec, 'foo-ios.zip')).toBe('Not for this computer: this build is for iOS.');
+    expect(why(rec, 'README.md')).toBe('Not recommended: this is a text or metadata file, not an application.');
+    expect(why(recommend(assets('foo-installer.sh'), WIN_X64, PREFS), 'foo-installer.sh')).toBe(
+      'Not for this computer: this build is for macOS or Linux computers.',
+    );
+    expect(why(recommend(assets('foo-freebsd_amd64.tar.gz'), WIN_X64, PREFS), 'foo-freebsd_amd64.tar.gz')).toBe(
+      'Not for this computer: this build is for BSD computers.',
+    );
   });
 
   it('symbols and debug builds never beat a normal binary', () => {
@@ -139,10 +188,20 @@ describe('recommend: regressions', () => {
     expect(forward.primary?.score).toBe(forward.alternatives[0]?.score);
   });
 
-  it('generic zip alone is never high confidence', () => {
+  it('generic zip alone is never recommended', () => {
     const rec = recommend(assets('foo.zip'), WIN_X64, PREFS);
-    expect(rec.primary?.name).toBe('foo.zip');
-    expect(rec.confidence).toBe('low');
+    expect(rec.primary).toBeUndefined();
+    expect(rec.confidence).toBe('none');
+    expect(names(rec.alternatives)).toEqual(['foo.zip']);
+  });
+
+  it('installer preference lifts an arch-less installer over an arch-tagged portable zip', () => {
+    const installer = { ...PREFS, packagePreference: 'installer' as const };
+    const rec = recommend(assets('Foo-2.1.6.Setup.exe', 'foo-win32-x64-2.1.6.zip'), WIN_X64, installer);
+    expect(rec.primary?.name).toBe('Foo-2.1.6.Setup.exe');
+    expect(rec.primary?.score).toBe(100);
+    expect(rec.confidence).toBe('medium');
+    expect(recommend(assets('Foo-2.1.6.Setup.exe', 'foo-win32-x64-2.1.6.zip'), WIN_X64, PREFS).primary?.name).toBe('foo-win32-x64-2.1.6.zip');
   });
 
   it('a jar never outranks a native windows package', () => {

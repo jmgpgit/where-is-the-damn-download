@@ -52,6 +52,7 @@ npm start           # Firefox with the extension loaded, on a repo with releases
 npm start -- --chrome   # same in Chrome/Chromium
 npm start -- --fresh    # throwaway profile instead of .dev-profile/
 npm run icons       # regenerate icons/ from tools/icons.mjs
+npm run probe -- owner/repo [--save]   # classify a repo's latest release; --save snapshots it as a real-world fixture
 ```
 
 `npm start` (`tools/dev.mjs`) makes a dev build, opens the browser with a

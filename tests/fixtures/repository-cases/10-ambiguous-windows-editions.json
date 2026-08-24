@@ -19,7 +19,7 @@
   ],
   "expect": {
     "primaryName": "foo-win64-home.zip",
-    "confidence": "low",
+    "confidence": "medium",
     "excludedCount": 0
   }
 }

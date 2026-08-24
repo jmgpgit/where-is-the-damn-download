@@ -1,0 +1,207 @@
+{
+  "repo": "astral-sh/ruff",
+  "tag": "0.16.4",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "dist-manifest.json",
+      "size": 44597,
+      "downloadCount": 47
+    },
+    {
+      "name": "ruff-aarch64-apple-darwin.tar.gz",
+      "size": 9332658,
+      "downloadCount": 15417
+    },
+    {
+      "name": "ruff-aarch64-apple-darwin.tar.gz.sha256",
+      "size": 99,
+      "downloadCount": 109
+    },
+    {
+      "name": "ruff-aarch64-pc-windows-msvc.zip",
+      "size": 9575513,
+      "downloadCount": 170
+    },
+    {
+      "name": "ruff-aarch64-pc-windows-msvc.zip.sha256",
+      "size": 99,
+      "downloadCount": 113
+    },
+    {
+      "name": "ruff-aarch64-unknown-linux-gnu.tar.gz",
+      "size": 9460209,
+      "downloadCount": 1839
+    },
+    {
+      "name": "ruff-aarch64-unknown-linux-gnu.tar.gz.sha256",
+      "size": 104,
+      "downloadCount": 154
+    },
+    {
+      "name": "ruff-aarch64-unknown-linux-musl.tar.gz",
+      "size": 9623223,
+      "downloadCount": 282
+    },
+    {
+      "name": "ruff-aarch64-unknown-linux-musl.tar.gz.sha256",
+      "size": 105,
+      "downloadCount": 106
+    },
+    {
+      "name": "ruff-arm-unknown-linux-musleabihf.tar.gz",
+      "size": 9578171,
+      "downloadCount": 48
+    },
+    {
+      "name": "ruff-arm-unknown-linux-musleabihf.tar.gz.sha256",
+      "size": 107,
+      "downloadCount": 90
+    },
+    {
+      "name": "ruff-armv7-unknown-linux-gnueabihf.tar.gz",
+      "size": 9410314,
+      "downloadCount": 36
+    },
+    {
+      "name": "ruff-armv7-unknown-linux-gnueabihf.tar.gz.sha256",
+      "size": 108,
+      "downloadCount": 92
+    },
+    {
+      "name": "ruff-armv7-unknown-linux-musleabihf.tar.gz",
+      "size": 9399466,
+      "downloadCount": 37
+    },
+    {
+      "name": "ruff-armv7-unknown-linux-musleabihf.tar.gz.sha256",
+      "size": 109,
+      "downloadCount": 91
+    },
+    {
+      "name": "ruff-i686-pc-windows-msvc.zip",
+      "size": 9404919,
+      "downloadCount": 48
+    },
+    {
+      "name": "ruff-i686-pc-windows-msvc.zip.sha256",
+      "size": 96,
+      "downloadCount": 108
+    },
+    {
+      "name": "ruff-i686-unknown-linux-gnu.tar.gz",
+      "size": 10158024,
+      "downloadCount": 39
+    },
+    {
+      "name": "ruff-i686-unknown-linux-gnu.tar.gz.sha256",
+      "size": 101,
+      "downloadCount": 91
+    },
+    {
+      "name": "ruff-i686-unknown-linux-musl.tar.gz",
+      "size": 9889240,
+      "downloadCount": 36
+    },
+    {
+      "name": "ruff-i686-unknown-linux-musl.tar.gz.sha256",
+      "size": 102,
+      "downloadCount": 88
+    },
+    {
+      "name": "ruff-installer.ps1",
+      "size": 22594,
+      "downloadCount": 37
+    },
+    {
+      "name": "ruff-installer.sh",
+      "size": 68260,
+      "downloadCount": 49
+    },
+    {
+      "name": "ruff-powerpc64le-unknown-linux-gnu.tar.gz",
+      "size": 10932442,
+      "downloadCount": 36
+    },
+    {
+      "name": "ruff-powerpc64le-unknown-linux-gnu.tar.gz.sha256",
+      "size": 108,
+      "downloadCount": 93
+    },
+    {
+      "name": "ruff-riscv64gc-unknown-linux-gnu.tar.gz",
+      "size": 10246556,
+      "downloadCount": 38
+    },
+    {
+      "name": "ruff-riscv64gc-unknown-linux-gnu.tar.gz.sha256",
+      "size": 106,
+      "downloadCount": 91
+    },
+    {
+      "name": "ruff-s390x-unknown-linux-gnu.tar.gz",
+      "size": 10439044,
+      "downloadCount": 39
+    },
+    {
+      "name": "ruff-s390x-unknown-linux-gnu.tar.gz.sha256",
+      "size": 102,
+      "downloadCount": 89
+    },
+    {
+      "name": "ruff-x86_64-apple-darwin.tar.gz",
+      "size": 9865447,
+      "downloadCount": 791
+    },
+    {
+      "name": "ruff-x86_64-apple-darwin.tar.gz.sha256",
+      "size": 98,
+      "downloadCount": 95
+    },
+    {
+      "name": "ruff-x86_64-pc-windows-msvc.zip",
+      "size": 9743340,
+      "downloadCount": 11724
+    },
+    {
+      "name": "ruff-x86_64-pc-windows-msvc.zip.sha256",
+      "size": 98,
+      "downloadCount": 122
+    },
+    {
+      "name": "ruff-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 9899646,
+      "downloadCount": 49309
+    },
+    {
+      "name": "ruff-x86_64-unknown-linux-gnu.tar.gz.sha256",
+      "size": 103,
+      "downloadCount": 247
+    },
+    {
+      "name": "ruff-x86_64-unknown-linux-musl.tar.gz",
+      "size": 10313237,
+      "downloadCount": 7064
+    },
+    {
+      "name": "ruff-x86_64-unknown-linux-musl.tar.gz.sha256",
+      "size": 104,
+      "downloadCount": 136
+    },
+    {
+      "name": "sha256.sum",
+      "size": 81,
+      "downloadCount": 34
+    },
+    {
+      "name": "source.tar.gz",
+      "size": 13120186,
+      "downloadCount": 56
+    },
+    {
+      "name": "source.tar.gz.sha256",
+      "size": 81,
+      "downloadCount": 79
+    }
+  ]
+}

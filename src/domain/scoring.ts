@@ -23,6 +23,7 @@ import {
   ARCH_WEIGHT,
   OS_WEIGHT,
   PORTABLE_PREFERRED_BONUS,
+  PREFERRED_INSTALLER_BONUS,
   ROLE_PENALTIES,
   type HardRole,
   type PenalizedRole,
@@ -35,9 +36,12 @@ export const OS_NAMES: Readonly<Record<OperatingSystem, string>> = {
   linux: 'Linux',
   android: 'Android',
   chromeos: 'ChromeOS',
-  openbsd: 'OpenBSD',
+  openbsd: 'BSD',
   unknown: 'an unknown system',
 };
+
+/** Users on these get foreign-architecture builds excluded; unknown/universal users are never excluded. */
+const DESKTOP_ARCHES: ReadonlySet<Architecture> = new Set<Architecture>(['x64', 'arm64', 'x86', 'arm']);
 
 export const ARCH_NAMES: Readonly<Record<Architecture, string>> = {
   x64: '64-bit',
@@ -56,6 +60,7 @@ const HARD_ROLE_EXPLANATIONS: Readonly<Record<HardRole, string>> = {
   sbom: 'Not recommended: this file describes the software for auditors; it is not the program.',
   symbols: 'Not recommended: this contains debugging symbols for developers, not the program.',
   'updater-metadata': "Not recommended: this file is used by the app's automatic updater.",
+  metadata: 'Not recommended: this is a text or metadata file, not an application.',
   empty: 'Not recommended: this file is empty.',
 };
 
@@ -65,6 +70,7 @@ const PENALTY_CLAUSES: Readonly<Record<PenalizedRole, string>> = {
   nightly: 'is an unstable preview build',
   server: 'is a server edition, not the desktop app',
   plugin: 'is a plugin, not the main application',
+  script: 'is a script that runs in a terminal, not an installer',
 };
 
 function formatClause(kind: PackageKind): string {
@@ -129,7 +135,10 @@ export function classifyAsset(
     kind = pkg.kind;
 
     // --- operating system ---
-    if (os.systems.length === 0) {
+    if (os.nonDesktop !== null) {
+      eligible = false;
+      add('os-non-desktop', 'os', 'exclude', 0, `Not for this computer: this build is for ${os.nonDesktop}.`);
+    } else if (os.systems.length === 0) {
       const neutral = kind === 'java-archive' || arch.architectures.includes('universal');
       if (neutral) add('os-neutral', 'os', 'positive', OS_WEIGHT.neutral, 'works on any operating system');
       else add('os-unspecified', 'os', 'positive', OS_WEIGHT.unspecified, 'does not name an operating system');
@@ -150,7 +159,10 @@ export function classifyAsset(
     if (eligible) {
       const target = platform.arch;
       const found = arch.architectures;
-      if (target === 'unknown' || target === 'universal' || found.length === 0) {
+      if (arch.foreign.length > 0 && DESKTOP_ARCHES.has(target) && !found.includes(target)) {
+        eligible = false;
+        add('arch-foreign', 'architecture', 'exclude', 0, `Not for this computer: this build is for a different kind of processor (${arch.foreign.join(', ')}).`);
+      } else if (target === 'unknown' || target === 'universal' || found.length === 0) {
         add('arch-unspecified', 'architecture', 'positive', ARCH_WEIGHT.unspecified, 'does not name a processor type');
       } else if (found.includes(target)) {
         add('arch-exact', 'architecture', 'positive', ARCH_WEIGHT.exact, `matches your ${ARCH_NAMES[target]} computer`);
@@ -176,6 +188,9 @@ export function classifyAsset(
       }
       if (roles.portable && prefs.packagePreference === 'portable') {
         add('pref-portable', 'preference', 'positive', PORTABLE_PREFERRED_BONUS, 'is a portable version, which you prefer');
+      }
+      if (prefs.packagePreference === 'installer' && (kind === 'windows-installer' || kind === 'macos-installer')) {
+        add('pref-installer', 'preference', 'positive', PREFERRED_INSTALLER_BONUS, 'is an installer, which you prefer');
       }
     }
   }

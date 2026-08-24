@@ -1,0 +1,47 @@
+{
+  "repo": "hluk/CopyQ",
+  "tag": "v16.0.0",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "checksums-sha512.txt",
+      "size": 924,
+      "downloadCount": 641
+    },
+    {
+      "name": "CopyQ-16.0.0-macos-12-m1.dmg",
+      "size": 36338838,
+      "downloadCount": 16150
+    },
+    {
+      "name": "CopyQ-16.0.0-macos-13.dmg",
+      "size": 35925771,
+      "downloadCount": 2868
+    },
+    {
+      "name": "copyq-16.0.0-setup.exe",
+      "size": 19241128,
+      "downloadCount": 22085
+    },
+    {
+      "name": "CopyQ-16.0.0-x86_64.AppImage",
+      "size": 47696376,
+      "downloadCount": 2344
+    },
+    {
+      "name": "CopyQ-16.0.0.tar.gz",
+      "size": 3721554,
+      "downloadCount": 1004
+    },
+    {
+      "name": "copyq-16.0.0.zip",
+      "size": 25188910,
+      "downloadCount": 5531
+    },
+    {
+      "name": "cosign.bundle",
+      "size": 4393,
+      "downloadCount": 308
+    }
+  ]
+}

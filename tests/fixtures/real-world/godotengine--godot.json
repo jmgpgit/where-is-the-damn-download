@@ -1,0 +1,177 @@
+{
+  "repo": "godotengine/godot",
+  "tag": "4.7.2-stable",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "godot-4.7.2-stable.tar.xz",
+      "size": 47744300,
+      "downloadCount": 596
+    },
+    {
+      "name": "godot-4.7.2-stable.tar.xz.sha256",
+      "size": 92,
+      "downloadCount": 186
+    },
+    {
+      "name": "godot-lib.4.7.2.stable.mono.template_release.aar",
+      "size": 103605746,
+      "downloadCount": 60
+    },
+    {
+      "name": "godot-lib.4.7.2.stable.template_release.aar",
+      "size": 103251267,
+      "downloadCount": 75
+    },
+    {
+      "name": "godot-lib.4.7.2.stable.template_release.perfetto.aar",
+      "size": 105863162,
+      "downloadCount": 31
+    },
+    {
+      "name": "Godot_native_debug_symbols.4.7.2.stable.editor.android.zip",
+      "size": 1309969445,
+      "downloadCount": 35
+    },
+    {
+      "name": "Godot_native_debug_symbols.4.7.2.stable.template_release.android.zip",
+      "size": 780497672,
+      "downloadCount": 34
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_debug.perfetto.apk",
+      "size": 130087617,
+      "downloadCount": 426
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_editor.aab",
+      "size": 331935184,
+      "downloadCount": 62
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_editor.apk",
+      "size": 688166381,
+      "downloadCount": 564
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_editor_horizonos.apk",
+      "size": 168981853,
+      "downloadCount": 30
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_editor_picoos.apk",
+      "size": 176377894,
+      "downloadCount": 37
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_release.perfetto.apk",
+      "size": 107415229,
+      "downloadCount": 47
+    },
+    {
+      "name": "Godot_v4.7.2-stable_android_source.perfetto.zip",
+      "size": 219513141,
+      "downloadCount": 35
+    },
+    {
+      "name": "Godot_v4.7.2-stable_export_templates.tpz",
+      "size": 1281349702,
+      "downloadCount": 8894
+    },
+    {
+      "name": "Godot_v4.7.2-stable_linux.arm32.zip",
+      "size": 74780990,
+      "downloadCount": 98
+    },
+    {
+      "name": "Godot_v4.7.2-stable_linux.arm64.zip",
+      "size": 77008699,
+      "downloadCount": 545
+    },
+    {
+      "name": "Godot_v4.7.2-stable_linux.x86_32.zip",
+      "size": 78111204,
+      "downloadCount": 58
+    },
+    {
+      "name": "Godot_v4.7.2-stable_linux.x86_64.zip",
+      "size": 77860424,
+      "downloadCount": 11534
+    },
+    {
+      "name": "Godot_v4.7.2-stable_macos.universal.zip",
+      "size": 170622178,
+      "downloadCount": 22784
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_export_templates.tpz",
+      "size": 1202598411,
+      "downloadCount": 1114
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_linux_arm32.zip",
+      "size": 104613285,
+      "downloadCount": 43
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_linux_arm64.zip",
+      "size": 106869118,
+      "downloadCount": 58
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_linux_x86_32.zip",
+      "size": 107861168,
+      "downloadCount": 63
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_linux_x86_64.zip",
+      "size": 107698034,
+      "downloadCount": 836
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_macos.universal.zip",
+      "size": 200756622,
+      "downloadCount": 1320
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_win32.zip",
+      "size": 118429361,
+      "downloadCount": 118
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_win64.zip",
+      "size": 116582061,
+      "downloadCount": 1706
+    },
+    {
+      "name": "Godot_v4.7.2-stable_mono_windows_arm64.zip",
+      "size": 114880839,
+      "downloadCount": 75
+    },
+    {
+      "name": "Godot_v4.7.2-stable_web_editor.zip",
+      "size": 54031095,
+      "downloadCount": 84
+    },
+    {
+      "name": "Godot_v4.7.2-stable_win32.exe.zip",
+      "size": 87837088,
+      "downloadCount": 165
+    },
+    {
+      "name": "Godot_v4.7.2-stable_win64.exe.zip",
+      "size": 86013866,
+      "downloadCount": 10066
+    },
+    {
+      "name": "Godot_v4.7.2-stable_windows_arm64.exe.zip",
+      "size": 84263370,
+      "downloadCount": 149
+    },
+    {
+      "name": "SHA512-SUMS.txt",
+      "size": 5682,
+      "downloadCount": 1082
+    }
+  ]
+}

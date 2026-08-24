@@ -1,0 +1,77 @@
+{
+  "repo": "balena-io/etcher",
+  "tag": "v2.1.6",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "balena-etcher-2.1.6-1.x86_64.rpm",
+      "size": 127816701,
+      "downloadCount": 40035
+    },
+    {
+      "name": "balena-etcher_2.1.6_amd64.deb",
+      "size": 123910696,
+      "downloadCount": 159608
+    },
+    {
+      "name": "balenaEtcher-2.1.6-arm64.dmg",
+      "size": 156522199,
+      "downloadCount": 2618710
+    },
+    {
+      "name": "balenaEtcher-2.1.6-x64.dmg",
+      "size": 166246969,
+      "downloadCount": 1032871
+    },
+    {
+      "name": "balenaEtcher-2.1.6.Setup.exe",
+      "size": 200075928,
+      "downloadCount": 1795400
+    },
+    {
+      "name": "balenaEtcher-darwin-arm64-2.1.6.zip",
+      "size": 156132732,
+      "downloadCount": 5125
+    },
+    {
+      "name": "balenaEtcher-darwin-x64-2.1.6.zip",
+      "size": 165968821,
+      "downloadCount": 5460
+    },
+    {
+      "name": "balenaEtcher-linux-x64-2.1.6.zip",
+      "size": 163379816,
+      "downloadCount": 658299
+    },
+    {
+      "name": "balenaEtcher-win32-x64-2.1.6.zip",
+      "size": 207374818,
+      "downloadCount": 31631
+    },
+    {
+      "name": "npm-sbom.json",
+      "size": 3513053,
+      "downloadCount": 1581
+    },
+    {
+      "name": "SHA256SUMS.Darwin.arm64.txt",
+      "size": 197,
+      "downloadCount": 1564
+    },
+    {
+      "name": "SHA256SUMS.Darwin.x64.txt",
+      "size": 193,
+      "downloadCount": 1412
+    },
+    {
+      "name": "SHA256SUMS.Linux.x64.txt",
+      "size": 294,
+      "downloadCount": 4957
+    },
+    {
+      "name": "SHA256SUMS.Windows.x64.txt",
+      "size": 194,
+      "downloadCount": 2577
+    }
+  ]
+}

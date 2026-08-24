@@ -6,7 +6,7 @@
  * whole token. Weights are relative nudges, not probabilities.
  */
 
-import type { Architecture, OperatingSystem } from './asset-types';
+import type { Architecture, OperatingSystem, PackageKind } from './asset-types';
 
 export type AliasSequence = readonly string[];
 
@@ -36,14 +36,26 @@ export const OS_TOKEN_ALIASES: ReadonlyArray<readonly [OperatingSystem, AliasSeq
   ['linux', ['fedora']],
   ['linux', ['glibc']],
   ['linux', ['musl']],
+  ['linux', ['musllinux']],
+  ['linux', ['manylinux']],
   ['linux', ['appimage']],
+  ['android', ['android']],
+  ['openbsd', ['freebsd']],
+  ['openbsd', ['netbsd']],
+  ['openbsd', ['openbsd']],
+  ['openbsd', ['dragonfly']],
+  ['openbsd', ['bsd']],
 ];
+
+/** Tokens naming a system no desktop user can run: token → display name. */
+export const NON_DESKTOP_OS_TOKENS: Readonly<Record<string, string>> = { ios: 'iOS' };
 
 /** Extensions that on their own pin the OS. */
 export const OS_EXTENSIONS: Readonly<Record<string, OperatingSystem>> = {
   '.exe': 'windows',
   '.msi': 'windows',
   '.msix': 'windows',
+  '.msixbundle': 'windows',
   '.appx': 'windows',
   '.appxbundle': 'windows',
   '.dmg': 'macos',
@@ -54,6 +66,15 @@ export const OS_EXTENSIONS: Readonly<Record<string, OperatingSystem>> = {
   '.rpm': 'linux',
   '.flatpakref': 'linux',
   '.snap': 'linux',
+};
+
+/** Terminal scripts: penalized role, and the extension implies the OS family. */
+export const SCRIPT_EXTENSIONS: Readonly<Record<string, readonly OperatingSystem[]>> = {
+  '.sh': ['macos', 'linux'],
+  '.command': ['macos', 'linux'],
+  '.ps1': ['windows'],
+  '.bat': ['windows'],
+  '.cmd': ['windows'],
 };
 
 // --- architectures -----------------------------------------------------------
@@ -67,9 +88,14 @@ export const ARCH_TOKEN_ALIASES: ReadonlyArray<readonly [Architecture, AliasSequ
   ['x64', ['win64']],
   ['x64', ['64', 'bit']],
   ['x64', ['64bit']],
+  ['x64', ['intel']],
   ['arm64', ['arm64']],
   ['arm64', ['aarch64']],
   ['arm64', ['arm', '64']],
+  ['arm64', ['m1']],
+  ['arm64', ['m2']],
+  ['arm64', ['m3']],
+  ['arm64', ['m4']],
   ['x86', ['ia32']],
   ['x86', ['i386']],
   ['x86', ['i486']],
@@ -80,10 +106,24 @@ export const ARCH_TOKEN_ALIASES: ReadonlyArray<readonly [Architecture, AliasSequ
   ['x86', ['x86', '32']],
   ['arm', ['armv7']],
   ['arm', ['armhf']],
+  ['arm', ['armv5']],
+  ['arm', ['armv6']],
+  ['arm', ['armv6l']],
+  ['arm', ['armv7l']],
+  ['arm', ['armv7hf']],
+  ['arm', ['arm32']],
+  ['arm', ['armel']],
   ['riscv64', ['riscv64']],
+  ['riscv64', ['riscv64gc']],
   ['universal', ['universal']],
   ['universal', ['universal2']],
   ['universal', ['noarch']],
+];
+
+/** Processor families no supported desktop has; excluded for x64/arm64/x86/arm users. */
+export const FOREIGN_ARCH_TOKENS: readonly string[] = [
+  's390x', 'ppc64', 'ppc64le', 'powerpc', 'powerpc64le', 'loong64', 'loongarch64',
+  'mips', 'mips64', 'mips64el', 'mipsel', 'sparc64', 'ia64',
 ];
 
 // --- roles -------------------------------------------------------------------
@@ -96,10 +136,12 @@ export type HardRole =
   | 'sbom'
   | 'symbols'
   | 'updater-metadata'
+  | 'metadata'
   | 'empty';
 
 export const HARD_ROLE_TOKEN_ALIASES: ReadonlyArray<readonly [HardRole, AliasSequence]> = [
   ['source', ['source']],
+  ['source', ['sources']],
   ['source', ['src']],
   ['source', ['source', 'code']],
   ['checksum', ['checksum']],
@@ -122,8 +164,14 @@ export const HARD_ROLE_TOKEN_ALIASES: ReadonlyArray<readonly [HardRole, AliasSeq
   ['sbom', ['intoto']],
   ['symbols', ['symbols']],
   ['symbols', ['pdb']],
+  ['symbols', ['pdbs']],
   ['symbols', ['dsym']],
+  ['symbols', ['dsyms']],
+  ['symbols', ['dbgsym']],
+  ['symbols', ['dbsym']],
+  ['symbols', ['debugsymbols']],
   ['updater-metadata', ['appcast']],
+  ['updater-metadata', ['dist', 'manifest']],
 ];
 
 export const HARD_ROLE_EXTENSIONS: Readonly<Record<string, HardRole>> = {
@@ -144,11 +192,18 @@ export const HARD_ROLE_EXTENSIONS: Readonly<Record<string, HardRole>> = {
   '.cdx.json': 'sbom',
   '.pdb': 'symbols',
   '.dsym.zip': 'symbols',
+  '.ddeb': 'symbols',
   '.blockmap': 'updater-metadata',
+  '.zsync': 'updater-metadata',
 };
 
-/** Whole stem tokens that name a checksum list: SHA256SUMS, SHASUMS256, md5sums… */
-export const CHECKSUM_TOKEN_PATTERN = /^(?:sha\d*sums?|shasums?\d*|md5sums?|checksums?|b2sums?)$/;
+/** Text/metadata files; checked last so SHA256SUMS.txt stays a checksum and latest.yml an updater file. */
+export const METADATA_EXTENSIONS: readonly string[] = [
+  '.json', '.txt', '.md', '.xml', '.html', '.pdf', '.csv', '.log', '.yml', '.yaml',
+];
+
+/** Whole stem tokens that name a checksum list: SHA256SUMS, SHASUMS256, SHA2-256SUMS, md5sums… */
+export const CHECKSUM_TOKEN_PATTERN = /^(?:sha\d*sums?|shasums?\d*|\d+sums?|md5sums?|checksums?|b2sums?)$/;
 
 /** Squirrel's bare `RELEASES` manifest: no extension, exactly this name. */
 export const UPDATER_MANIFEST_NAMES: readonly string[] = ['releases'];
@@ -163,6 +218,7 @@ export const ROLE_PENALTIES = {
   nightly: -45,
   server: -20,
   plugin: -20,
+  script: -40,
 } as const;
 
 export type PenalizedRole = keyof typeof ROLE_PENALTIES;
@@ -179,6 +235,7 @@ export const PENALIZED_ROLE_ALIASES: ReadonlyArray<readonly [PenalizedRole, Alia
   ['plugin', ['extension']],
 ];
 
+/** Matched as whole token or as prefix/suffix: `powertoysusersetup`, `websetup`, `installer64`. */
 export const INSTALLER_WORDS: readonly string[] = [
   'setup',
   'installer',
@@ -186,7 +243,6 @@ export const INSTALLER_WORDS: readonly string[] = [
   'nsis',
   'inno',
   'squirrel',
-  'websetup',
 ];
 
 export const PORTABLE_WORD_ALIASES: readonly AliasSequence[] = [
@@ -233,5 +289,21 @@ export const FORMAT_WEIGHT = {
 } as const;
 
 export const PORTABLE_PREFERRED_BONUS = 20;
+/** Lets an arch-less Setup.exe (82) beat an arch-tagged portable zip (96). */
+export const PREFERRED_INSTALLER_BONUS = 18;
 /** Applied by recommend() only when a real installer competes in the release. */
 export const PORTABLE_WHEN_INSTALLER_PREFERRED = -6;
+
+/** Beginner-friendliness: installer > executable > AppImage/deb/rpm > portable > generic > Java. */
+export const FORMAT_RANK: Readonly<Partial<Record<PackageKind, number>>> = {
+  'windows-installer': 6,
+  'macos-installer': 6,
+  'windows-executable': 5,
+  'macos-application': 5,
+  'linux-appimage': 4,
+  'linux-deb': 4,
+  'linux-rpm': 4,
+  'portable-archive': 3,
+  'generic-archive': 2,
+  'java-archive': 1,
+};

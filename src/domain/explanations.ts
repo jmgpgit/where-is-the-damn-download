@@ -34,6 +34,11 @@ export function explainExclusion(asset: ClassifiedAsset): string {
   return exclusion?.explanation ?? 'Not recommended for this computer.';
 }
 
+/** Variant tie (user vs machine setup, msvc vs gnu…) settled by popularity. */
+export function explainVariantTieBreak(other: ClassifiedAsset): string {
+  return `Chosen over ${other.name} because more people downloaded it.`;
+}
+
 export function buildWarnings(
   primary: ClassifiedAsset | undefined,
   prefs: UserPreferences,
@@ -48,6 +53,9 @@ export function buildWarnings(
   }
   if (primary.roles.includes('cli')) {
     warnings.push('Command-line application — opens in a terminal.');
+  }
+  if (primary.roles.includes('script')) {
+    warnings.push('This is a script that runs in a terminal, not an installer.');
   }
   if (
     prefs.packagePreference === 'installer' &&

@@ -1,0 +1,17 @@
+{
+  "repo": "ShareX/ShareX",
+  "tag": "v21.0.0",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "ShareX-21.0.0-portable-x64.zip",
+      "size": 208850419,
+      "downloadCount": 53592
+    },
+    {
+      "name": "ShareX-21.0.0-setup-x64.exe",
+      "size": 139151207,
+      "downloadCount": 836725
+    }
+  ]
+}

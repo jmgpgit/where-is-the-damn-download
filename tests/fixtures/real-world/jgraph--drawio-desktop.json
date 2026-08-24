@@ -1,0 +1,152 @@
+{
+  "repo": "jgraph/drawio-desktop",
+  "tag": "v31.3.2",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "draw.io-31.3.2-windows-installer.exe",
+      "size": 141814216,
+      "downloadCount": 47623
+    },
+    {
+      "name": "draw.io-31.3.2-windows-installer.exe.blockmap",
+      "size": 149452,
+      "downloadCount": 22912
+    },
+    {
+      "name": "draw.io-31.3.2-windows.zip",
+      "size": 180318937,
+      "downloadCount": 3121
+    },
+    {
+      "name": "draw.io-31.3.2.msi",
+      "size": 147550208,
+      "downloadCount": 1337
+    },
+    {
+      "name": "draw.io-arm64-31.3.2-windows-arm64-installer.exe",
+      "size": 140416768,
+      "downloadCount": 379
+    },
+    {
+      "name": "draw.io-arm64-31.3.2-windows-arm64-installer.exe.blockmap",
+      "size": 148168,
+      "downloadCount": 27
+    },
+    {
+      "name": "draw.io-arm64-31.3.2-windows-arm64-no-installer.exe",
+      "size": 140203928,
+      "downloadCount": 157
+    },
+    {
+      "name": "draw.io-arm64-31.3.2.dmg",
+      "size": 161528543,
+      "downloadCount": 13328
+    },
+    {
+      "name": "draw.io-arm64-31.3.2.dmg.blockmap",
+      "size": 169850,
+      "downloadCount": 25
+    },
+    {
+      "name": "draw.io-arm64-31.3.2.zip",
+      "size": 155623812,
+      "downloadCount": 12799
+    },
+    {
+      "name": "draw.io-arm64-31.3.2.zip.blockmap",
+      "size": 164449,
+      "downloadCount": 8878
+    },
+    {
+      "name": "draw.io-ia32-31.3.2-windows-32bit-installer.exe",
+      "size": 132517672,
+      "downloadCount": 481
+    },
+    {
+      "name": "draw.io-ia32-31.3.2-windows-32bit-installer.exe.blockmap",
+      "size": 140343,
+      "downloadCount": 24
+    },
+    {
+      "name": "draw.io-universal-31.3.2.dmg",
+      "size": 258484675,
+      "downloadCount": 10597
+    },
+    {
+      "name": "draw.io-universal-31.3.2.dmg.blockmap",
+      "size": 269474,
+      "downloadCount": 16
+    },
+    {
+      "name": "draw.io-x64-31.3.2.dmg",
+      "size": 166138568,
+      "downloadCount": 1008
+    },
+    {
+      "name": "draw.io-x64-31.3.2.dmg.blockmap",
+      "size": 174964,
+      "downloadCount": 17
+    },
+    {
+      "name": "draw.io-x64-31.3.2.zip",
+      "size": 160218203,
+      "downloadCount": 1046
+    },
+    {
+      "name": "draw.io-x64-31.3.2.zip.blockmap",
+      "size": 167077,
+      "downloadCount": 616
+    },
+    {
+      "name": "drawio-aarch64-31.3.2.rpm",
+      "size": 111756253,
+      "downloadCount": 32
+    },
+    {
+      "name": "drawio-amd64-31.3.2.deb",
+      "size": 133864780,
+      "downloadCount": 3487
+    },
+    {
+      "name": "drawio-arm64-31.3.2.AppImage",
+      "size": 168867708,
+      "downloadCount": 73
+    },
+    {
+      "name": "drawio-arm64-31.3.2.deb",
+      "size": 128380448,
+      "downloadCount": 154
+    },
+    {
+      "name": "drawio-x86_64-31.3.2.AppImage",
+      "size": 168793836,
+      "downloadCount": 852
+    },
+    {
+      "name": "drawio-x86_64-31.3.2.rpm",
+      "size": 117121249,
+      "downloadCount": 525
+    },
+    {
+      "name": "latest-linux-arm64.yml",
+      "size": 689,
+      "downloadCount": 84
+    },
+    {
+      "name": "latest-linux.yml",
+      "size": 690,
+      "downloadCount": 3175
+    },
+    {
+      "name": "latest-mac.yml",
+      "size": 964,
+      "downloadCount": 39106
+    },
+    {
+      "name": "latest.yml",
+      "size": 370,
+      "downloadCount": 33002
+    }
+  ]
+}

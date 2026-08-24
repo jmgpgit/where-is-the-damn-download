@@ -11,8 +11,10 @@ import {
   HARD_ROLE_EXTENSIONS,
   HARD_ROLE_TOKEN_ALIASES,
   INSTALLER_WORDS,
+  METADATA_EXTENSIONS,
   PENALIZED_ROLE_ALIASES,
   PORTABLE_WORD_ALIASES,
+  SCRIPT_EXTENSIONS,
   UPDATER_MANIFEST_NAMES,
   type HardRole,
   type PenalizedRole,
@@ -58,6 +60,7 @@ export function detectRoles(t: TokenizedName, size: number): RoleDetection {
   ) {
     hardRole = 'updater-metadata';
   }
+  if (hardRole === null && METADATA_EXTENSIONS.includes(t.extension)) hardRole = 'metadata';
 
   const penalized: PenalizedRole[] = [];
   for (const [role, alias] of PENALIZED_ROLE_ALIASES) {
@@ -66,6 +69,7 @@ export function detectRoles(t: TokenizedName, size: number): RoleDetection {
   if (DEVELOPER_PACKAGE_EXTENSIONS.includes(t.extension) && !penalized.includes('sdk')) {
     penalized.push('sdk');
   }
+  if (t.extension in SCRIPT_EXTENSIONS) penalized.push('script');
   const cli = t.tokens.includes('cli');
   const portable = PORTABLE_WORD_ALIASES.some((alias) => hasSequence(t.tokens, alias));
 
@@ -84,6 +88,7 @@ const HARD_ROLE_KIND: Readonly<Record<HardRole, PackageKind>> = {
   sbom: 'unknown',
   symbols: 'symbols',
   'updater-metadata': 'updater-metadata',
+  metadata: 'unknown',
   empty: 'unknown',
 };
 
@@ -99,6 +104,9 @@ export interface PackageDetection {
 const TARBALLS: readonly string[] = ['.tar.gz', '.tar.xz', '.tar.bz2', '.tgz', '.txz'];
 const LOOSE_COMPRESSED: readonly string[] = ['.gz', '.xz', '.bz2', '.zst'];
 
+const isInstallerWord = (token: string): boolean =>
+  INSTALLER_WORDS.some((w) => token === w || token.startsWith(w) || token.endsWith(w));
+
 export function detectPackageKind(
   t: TokenizedName,
   systems: readonly OperatingSystem[],
@@ -111,11 +119,11 @@ export function detectPackageKind(
       : { kind: 'generic-archive', formatWeight: FORMAT_WEIGHT.genericArchive };
 
   if (ext === '.msi') return { kind: 'windows-installer', formatWeight: FORMAT_WEIGHT.msi };
-  if (ext === '.msix' || ext === '.appx' || ext === '.appxbundle') {
+  if (ext === '.msix' || ext === '.msixbundle' || ext === '.appx' || ext === '.appxbundle') {
     return { kind: 'windows-installer', formatWeight: FORMAT_WEIGHT.storeApp };
   }
   if (ext === '.exe') {
-    return INSTALLER_WORDS.some((word) => t.tokens.includes(word))
+    return t.tokens.some(isInstallerWord)
       ? { kind: 'windows-installer', formatWeight: FORMAT_WEIGHT.installerExe }
       : { kind: 'windows-executable', formatWeight: FORMAT_WEIGHT.bareExe };
   }

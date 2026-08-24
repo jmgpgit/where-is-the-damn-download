@@ -65,13 +65,34 @@ describe('detectOperatingSystems / detectArchitectures', () => {
       systems: ['windows'],
       tokenSystems: [],
       extensionSystem: 'windows',
+      nonDesktop: null,
     });
     expect(detectOperatingSystems(tokenize('foo-windows.zip')).tokenSystems).toEqual(['windows']);
   });
 
   it('win32 is only a weak x86 hint, silenced by any other arch token', () => {
-    expect(detectArchitectures(tokenize('foo-win32.zip'))).toEqual({ architectures: ['x86'], weakX86: true });
-    expect(detectArchitectures(tokenize('foo-win32-x64.zip'))).toEqual({ architectures: ['x64'], weakX86: false });
+    expect(detectArchitectures(tokenize('foo-win32.zip'))).toEqual({ architectures: ['x86'], weakX86: true, foreign: [] });
+    expect(detectArchitectures(tokenize('foo-win32-x64.zip'))).toEqual({ architectures: ['x64'], weakX86: false, foreign: [] });
+  });
+
+  it('reports foreign processors and non-desktop systems', () => {
+    expect(detectArchitectures(tokenize('foo-s390x-linux.tar.gz')).foreign).toEqual(['s390x']);
+    expect(detectArchitectures(tokenize('foo-linux_ppc64le.tar.gz')).foreign).toEqual(['ppc64le']);
+    expect(detectOperatingSystems(tokenize('foo-ios-arm64.zip')).nonDesktop).toBe('iOS');
+    expect(detectOperatingSystems(tokenize('foo-freebsd_amd64.tar.gz')).systems).toEqual(['openbsd']);
+    expect(detectOperatingSystems(tokenize('foo-installer.sh')).systems).toEqual(['macos', 'linux']);
+    expect(detectOperatingSystems(tokenize('foo-installer.ps1')).systems).toEqual(['windows']);
+  });
+
+  it.each([
+    ['foo-macos-12-m1.dmg', 'arm64'],
+    ['foo-macos-intel.dmg', 'x64'],
+    ['foo-linux-armv7l.zip', 'arm'],
+    ['foo-linux-arm32.tar.gz', 'arm'],
+    ['foo-arm-unknown-linux-musleabihf.tar.gz', 'arm'],
+    ['foo_armv6.deb', 'arm'],
+  ])('%s is %s', (name, arch) => {
+    expect(detectArchitectures(tokenize(name)).architectures).toEqual([arch]);
   });
 
   it('bare numeric tokens carry no meaning', () => {

@@ -1,0 +1,77 @@
+{
+  "repo": "obsproject/obs-studio",
+  "tag": "32.2.2",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "OBS-Studio-32.2.2-macOS-Apple-dSYMs.tar.xz",
+      "size": 38569688,
+      "downloadCount": 662
+    },
+    {
+      "name": "OBS-Studio-32.2.2-macOS-Apple.dmg",
+      "size": 187703709,
+      "downloadCount": 12680
+    },
+    {
+      "name": "OBS-Studio-32.2.2-macOS-Intel-dSYMs.tar.xz",
+      "size": 39260752,
+      "downloadCount": 394
+    },
+    {
+      "name": "OBS-Studio-32.2.2-macOS-Intel.dmg",
+      "size": 198863134,
+      "downloadCount": 3449
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Sources.tar.gz",
+      "size": 16660601,
+      "downloadCount": 1147
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Ubuntu-24.04-x86_64-dbsym.ddeb",
+      "size": 452157426,
+      "downloadCount": 312
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Ubuntu-24.04-x86_64.deb",
+      "size": 134324516,
+      "downloadCount": 1089
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Ubuntu-26.04-x86_64-dbsym.ddeb",
+      "size": 455678022,
+      "downloadCount": 291
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Ubuntu-26.04-x86_64.deb",
+      "size": 134438766,
+      "downloadCount": 636
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Windows-arm64-PDBs.zip",
+      "size": 57317650,
+      "downloadCount": 1497
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Windows-arm64.zip",
+      "size": 167128219,
+      "downloadCount": 856
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Windows-x64-Installer.exe",
+      "size": 159809104,
+      "downloadCount": 31670
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Windows-x64-PDBs.zip",
+      "size": 64011684,
+      "downloadCount": 318
+    },
+    {
+      "name": "OBS-Studio-32.2.2-Windows-x64.zip",
+      "size": 187851583,
+      "downloadCount": 8275
+    }
+  ]
+}

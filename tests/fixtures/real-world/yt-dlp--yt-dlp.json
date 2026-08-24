@@ -1,0 +1,127 @@
+{
+  "repo": "yt-dlp/yt-dlp",
+  "tag": "2026.08.19",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "SHA2-256SUMS",
+      "size": 1595,
+      "downloadCount": 187583
+    },
+    {
+      "name": "SHA2-256SUMS.sig",
+      "size": 566,
+      "downloadCount": 2776
+    },
+    {
+      "name": "SHA2-512SUMS",
+      "size": 2811,
+      "downloadCount": 574
+    },
+    {
+      "name": "SHA2-512SUMS.sig",
+      "size": 566,
+      "downloadCount": 422
+    },
+    {
+      "name": "yt-dlp",
+      "size": 3072469,
+      "downloadCount": 521669
+    },
+    {
+      "name": "yt-dlp.exe",
+      "size": 17840399,
+      "downloadCount": 355229
+    },
+    {
+      "name": "yt-dlp.tar.gz",
+      "size": 6020567,
+      "downloadCount": 3400
+    },
+    {
+      "name": "yt-dlp_arm64.exe",
+      "size": 21159286,
+      "downloadCount": 2394
+    },
+    {
+      "name": "yt-dlp_linux",
+      "size": 40446224,
+      "downloadCount": 77015
+    },
+    {
+      "name": "yt-dlp_linux.zip",
+      "size": 40516244,
+      "downloadCount": 3373
+    },
+    {
+      "name": "yt-dlp_linux_aarch64",
+      "size": 40167448,
+      "downloadCount": 4388
+    },
+    {
+      "name": "yt-dlp_linux_aarch64.zip",
+      "size": 40213537,
+      "downloadCount": 567
+    },
+    {
+      "name": "yt-dlp_linux_armv7l.zip",
+      "size": 38661544,
+      "downloadCount": 574
+    },
+    {
+      "name": "yt-dlp_macos",
+      "size": 37146048,
+      "downloadCount": 39557
+    },
+    {
+      "name": "yt-dlp_macos.zip",
+      "size": 53923637,
+      "downloadCount": 21971
+    },
+    {
+      "name": "yt-dlp_musllinux",
+      "size": 40523752,
+      "downloadCount": 1098
+    },
+    {
+      "name": "yt-dlp_musllinux.zip",
+      "size": 40667591,
+      "downloadCount": 427
+    },
+    {
+      "name": "yt-dlp_musllinux_aarch64",
+      "size": 39806408,
+      "downloadCount": 416
+    },
+    {
+      "name": "yt-dlp_musllinux_aarch64.zip",
+      "size": 39905688,
+      "downloadCount": 410
+    },
+    {
+      "name": "yt-dlp_win.zip",
+      "size": 18087041,
+      "downloadCount": 15692
+    },
+    {
+      "name": "yt-dlp_win_arm64.zip",
+      "size": 21463236,
+      "downloadCount": 1313
+    },
+    {
+      "name": "yt-dlp_win_x86.zip",
+      "size": 13272140,
+      "downloadCount": 1930
+    },
+    {
+      "name": "yt-dlp_x86.exe",
+      "size": 13199160,
+      "downloadCount": 45300
+    },
+    {
+      "name": "_update_spec",
+      "size": 2191,
+      "downloadCount": 187104
+    }
+  ]
+}

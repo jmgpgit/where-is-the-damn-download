@@ -1,0 +1,17 @@
+{
+  "repo": "psf/requests",
+  "tag": "v2.34.2",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "requests-2.34.2-py3-none-any.whl",
+      "size": 73075,
+      "downloadCount": 344
+    },
+    {
+      "name": "requests-2.34.2.tar.gz",
+      "size": 142856,
+      "downloadCount": 337
+    }
+  ]
+}

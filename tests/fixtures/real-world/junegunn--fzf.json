@@ -1,0 +1,137 @@
+{
+  "repo": "junegunn/fzf",
+  "tag": "v0.74.3",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "fzf-0.74.3-android_arm64.tar.gz",
+      "size": 1933706,
+      "downloadCount": 136
+    },
+    {
+      "name": "fzf-0.74.3-darwin_amd64.tar.gz",
+      "size": 2084226,
+      "downloadCount": 708
+    },
+    {
+      "name": "fzf-0.74.3-darwin_arm64.tar.gz",
+      "size": 1911796,
+      "downloadCount": 4335
+    },
+    {
+      "name": "fzf-0.74.3-freebsd_amd64.tar.gz",
+      "size": 1990754,
+      "downloadCount": 79
+    },
+    {
+      "name": "fzf-0.74.3-linux_amd64.tar.gz",
+      "size": 2025378,
+      "downloadCount": 73686
+    },
+    {
+      "name": "fzf-0.74.3-linux_arm64.tar.gz",
+      "size": 1853686,
+      "downloadCount": 10257
+    },
+    {
+      "name": "fzf-0.74.3-linux_armv5.tar.gz",
+      "size": 1912822,
+      "downloadCount": 39
+    },
+    {
+      "name": "fzf-0.74.3-linux_armv6.tar.gz",
+      "size": 1902524,
+      "downloadCount": 48
+    },
+    {
+      "name": "fzf-0.74.3-linux_armv7.tar.gz",
+      "size": 1898550,
+      "downloadCount": 70
+    },
+    {
+      "name": "fzf-0.74.3-linux_loong64.tar.gz",
+      "size": 1946131,
+      "downloadCount": 41
+    },
+    {
+      "name": "fzf-0.74.3-linux_ppc64le.tar.gz",
+      "size": 1875207,
+      "downloadCount": 38
+    },
+    {
+      "name": "fzf-0.74.3-linux_riscv64.tar.gz",
+      "size": 1883300,
+      "downloadCount": 47
+    },
+    {
+      "name": "fzf-0.74.3-linux_s390x.tar.gz",
+      "size": 1957423,
+      "downloadCount": 42
+    },
+    {
+      "name": "fzf-0.74.3-openbsd_amd64.tar.gz",
+      "size": 1990110,
+      "downloadCount": 37
+    },
+    {
+      "name": "fzf-0.74.3-windows_amd64.zip",
+      "size": 2203002,
+      "downloadCount": 21636
+    },
+    {
+      "name": "fzf-0.74.3-windows_arm64.zip",
+      "size": 1995989,
+      "downloadCount": 624
+    },
+    {
+      "name": "fzf_0.74.3_amd64.deb",
+      "size": 2053428,
+      "downloadCount": 159
+    },
+    {
+      "name": "fzf_0.74.3_arm64.deb",
+      "size": 1881836,
+      "downloadCount": 45
+    },
+    {
+      "name": "fzf_0.74.3_armv5.deb",
+      "size": 1940088,
+      "downloadCount": 29
+    },
+    {
+      "name": "fzf_0.74.3_armv6.deb",
+      "size": 1930472,
+      "downloadCount": 31
+    },
+    {
+      "name": "fzf_0.74.3_armv7.deb",
+      "size": 1925788,
+      "downloadCount": 32
+    },
+    {
+      "name": "fzf_0.74.3_checksums.txt",
+      "size": 2337,
+      "downloadCount": 1217
+    },
+    {
+      "name": "fzf_0.74.3_loong64.deb",
+      "size": 1974074,
+      "downloadCount": 30
+    },
+    {
+      "name": "fzf_0.74.3_ppc64le.deb",
+      "size": 1903392,
+      "downloadCount": 29
+    },
+    {
+      "name": "fzf_0.74.3_riscv64.deb",
+      "size": 1911492,
+      "downloadCount": 30
+    },
+    {
+      "name": "fzf_0.74.3_s390x.deb",
+      "size": 1985250,
+      "downloadCount": 29
+    }
+  ]
+}

@@ -11,9 +11,9 @@ import type {
   UserPlatform,
   UserPreferences,
 } from './asset-types';
-import { assessConfidence } from './confidence';
-import { buildSummary, buildWarnings } from './explanations';
-import { PORTABLE_WHEN_INSTALLER_PREFERRED } from './rules';
+import { assessConfidence, isVariantOf } from './confidence';
+import { buildSummary, buildWarnings, explainVariantTieBreak } from './explanations';
+import { FORMAT_RANK, PORTABLE_WHEN_INSTALLER_PREFERRED } from './rules';
 import { classifyAsset } from './scoring';
 
 const INSTALLER_KINDS: ReadonlySet<PackageKind> = new Set<PackageKind>([
@@ -23,19 +23,10 @@ const INSTALLER_KINDS: ReadonlySet<PackageKind> = new Set<PackageKind>([
   'linux-rpm',
 ]);
 
-// installer > executable > portable archive > generic archive > java
-const FORMAT_RANK: Readonly<Partial<Record<PackageKind, number>>> = {
-  'windows-installer': 5,
-  'macos-installer': 5,
-  'linux-deb': 5,
-  'linux-rpm': 5,
-  'windows-executable': 4,
-  'macos-application': 4,
-  'linux-appimage': 4,
-  'portable-archive': 3,
-  'generic-archive': 2,
-  'java-archive': 1,
-};
+/** No OS evidence and nothing runnable-looking (pandas.tar.gz): shown, never recommended. */
+const isWeak = (a: ClassifiedAsset): boolean =>
+  a.detectedOperatingSystems.length === 0 &&
+  (a.packageKind === 'generic-archive' || a.packageKind === 'unknown');
 
 const hasRule = (asset: ClassifiedAsset, ruleId: string): boolean =>
   asset.evidence.some((e) => e.ruleId === ruleId);
@@ -101,12 +92,29 @@ export function recommend(
 
   const eligible = classified.filter((c) => c.eligible).sort((a, b) => compareRanked(a, b, prefs));
   const excluded = classified.filter((c) => !c.eligible);
-  const primary = eligible[0];
-  const confidence = assessConfidence(eligible);
+  const best = eligible[0];
+  const primary = best !== undefined && !isWeak(best) ? best : undefined;
+  const runnerUp = eligible[1];
+  if (
+    primary !== undefined &&
+    runnerUp !== undefined &&
+    isVariantOf(primary, runnerUp) &&
+    primary.score === runnerUp.score &&
+    primary.downloadCount > runnerUp.downloadCount
+  ) {
+    primary.evidence.push({
+      ruleId: 'tie-downloads',
+      category: 'popularity',
+      effect: 'informational',
+      weight: 0,
+      explanation: explainVariantTieBreak(runnerUp),
+    });
+  }
+  const confidence = primary === undefined ? 'none' : assessConfidence(eligible);
 
   const recommendation: Recommendation = {
     confidence,
-    alternatives: eligible.slice(1),
+    alternatives: primary === undefined ? eligible : eligible.slice(1),
     excluded,
     summary: buildSummary(confidence, primary),
     warnings: buildWarnings(primary, prefs),

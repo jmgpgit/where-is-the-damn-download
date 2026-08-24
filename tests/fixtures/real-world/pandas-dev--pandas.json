@@ -1,0 +1,12 @@
+{
+  "repo": "pandas-dev/pandas",
+  "tag": "v3.0.5",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "pandas-3.0.5.tar.gz",
+      "size": 4658219,
+      "downloadCount": 1657
+    }
+  ]
+}

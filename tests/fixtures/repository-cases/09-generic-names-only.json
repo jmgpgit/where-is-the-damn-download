@@ -18,8 +18,8 @@
     }
   ],
   "expect": {
-    "primaryName": "foo.zip",
-    "confidence": "low",
+    "primaryName": null,
+    "confidence": "none",
     "excludedCount": 0
   }
 }

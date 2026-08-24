@@ -1,0 +1,42 @@
+{
+  "repo": "microsoft/PowerToys",
+  "tag": "v0.100.2",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "GroupPolicyObjectFiles-0.100.2.zip",
+      "size": 8429,
+      "downloadCount": 4228
+    },
+    {
+      "name": "PowerToysSetup-0.100.2-arm64.exe",
+      "size": 276855448,
+      "downloadCount": 32607
+    },
+    {
+      "name": "PowerToysSetup-0.100.2-x64.exe",
+      "size": 284946496,
+      "downloadCount": 2330540
+    },
+    {
+      "name": "PowerToysUserSetup-0.100.2-arm64.exe",
+      "size": 276826736,
+      "downloadCount": 100122
+    },
+    {
+      "name": "PowerToysUserSetup-0.100.2-x64.exe",
+      "size": 284920432,
+      "downloadCount": 3245921
+    },
+    {
+      "name": "symbols-arm64.zip",
+      "size": 462648828,
+      "downloadCount": 1578
+    },
+    {
+      "name": "symbols-x64.zip",
+      "size": 473859660,
+      "downloadCount": 2988
+    }
+  ]
+}

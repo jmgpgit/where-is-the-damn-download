@@ -1,0 +1,6 @@
+{
+  "repo": "kubernetes/kubernetes",
+  "tag": "v1.36.4",
+  "prerelease": false,
+  "assets": []
+}

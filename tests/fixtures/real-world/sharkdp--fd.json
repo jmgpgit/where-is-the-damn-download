@@ -1,0 +1,112 @@
+{
+  "repo": "sharkdp/fd",
+  "tag": "v10.4.2",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "fd-musl_10.4.2_amd64.deb",
+      "size": 1444340,
+      "downloadCount": 5550
+    },
+    {
+      "name": "fd-musl_10.4.2_arm64.deb",
+      "size": 1324274,
+      "downloadCount": 1320
+    },
+    {
+      "name": "fd-musl_10.4.2_armhf.deb",
+      "size": 1200474,
+      "downloadCount": 956
+    },
+    {
+      "name": "fd-musl_10.4.2_i686.deb",
+      "size": 1264540,
+      "downloadCount": 1010
+    },
+    {
+      "name": "fd-v10.4.2-aarch64-apple-darwin.tar.gz",
+      "size": 1328933,
+      "downloadCount": 284162
+    },
+    {
+      "name": "fd-v10.4.2-aarch64-pc-windows-msvc.zip",
+      "size": 1370473,
+      "downloadCount": 5952
+    },
+    {
+      "name": "fd-v10.4.2-aarch64-unknown-linux-gnu.tar.gz",
+      "size": 1559490,
+      "downloadCount": 152867
+    },
+    {
+      "name": "fd-v10.4.2-aarch64-unknown-linux-musl.tar.gz",
+      "size": 1604562,
+      "downloadCount": 75661
+    },
+    {
+      "name": "fd-v10.4.2-arm-unknown-linux-gnueabihf.tar.gz",
+      "size": 1594207,
+      "downloadCount": 1383
+    },
+    {
+      "name": "fd-v10.4.2-arm-unknown-linux-musleabihf.tar.gz",
+      "size": 1453576,
+      "downloadCount": 1077
+    },
+    {
+      "name": "fd-v10.4.2-i686-pc-windows-msvc.zip",
+      "size": 1379740,
+      "downloadCount": 1891
+    },
+    {
+      "name": "fd-v10.4.2-i686-unknown-linux-gnu.tar.gz",
+      "size": 1765873,
+      "downloadCount": 1741
+    },
+    {
+      "name": "fd-v10.4.2-i686-unknown-linux-musl.tar.gz",
+      "size": 1514988,
+      "downloadCount": 1129
+    },
+    {
+      "name": "fd-v10.4.2-x86_64-pc-windows-gnu.zip",
+      "size": 1469143,
+      "downloadCount": 3058
+    },
+    {
+      "name": "fd-v10.4.2-x86_64-pc-windows-msvc.zip",
+      "size": 1525898,
+      "downloadCount": 394387
+    },
+    {
+      "name": "fd-v10.4.2-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 1700779,
+      "downloadCount": 719630
+    },
+    {
+      "name": "fd-v10.4.2-x86_64-unknown-linux-musl.tar.gz",
+      "size": 1754511,
+      "downloadCount": 679964
+    },
+    {
+      "name": "fd_10.4.2_amd64.deb",
+      "size": 1399120,
+      "downloadCount": 8709
+    },
+    {
+      "name": "fd_10.4.2_arm64.deb",
+      "size": 1277486,
+      "downloadCount": 1967
+    },
+    {
+      "name": "fd_10.4.2_armhf.deb",
+      "size": 1325632,
+      "downloadCount": 911
+    },
+    {
+      "name": "fd_10.4.2_i686.deb",
+      "size": 1474036,
+      "downloadCount": 909
+    }
+  ]
+}

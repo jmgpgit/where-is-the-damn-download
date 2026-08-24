@@ -1,0 +1,42 @@
+{
+  "repo": "pbatard/rufus",
+  "tag": "v4.15",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "rufus-4.15.exe",
+      "size": 1989992,
+      "downloadCount": 3619105
+    },
+    {
+      "name": "rufus-4.15.exe.sig",
+      "size": 256,
+      "downloadCount": 419365
+    },
+    {
+      "name": "rufus-4.15p.exe",
+      "size": 1989992,
+      "downloadCount": 1385948
+    },
+    {
+      "name": "rufus-4.15_arm64.exe",
+      "size": 5491048,
+      "downloadCount": 218100
+    },
+    {
+      "name": "rufus-4.15_arm64.exe.sig",
+      "size": 256,
+      "downloadCount": 2849
+    },
+    {
+      "name": "rufus-4.15_x86.exe",
+      "size": 1933672,
+      "downloadCount": 311711
+    },
+    {
+      "name": "rufus-4.15_x86.exe.sig",
+      "size": 256,
+      "downloadCount": 2923
+    }
+  ]
+}

@@ -14,7 +14,8 @@
     "icons": "node tools/icons.mjs",
     "lint": "web-ext lint --source-dir dist/firefox",
     "start": "node tools/dev.mjs",
-    "package": "npm run build && web-ext build --source-dir dist/firefox --overwrite-dest --filename {name}-{version}-firefox.zip && web-ext build --source-dir dist/chrome --overwrite-dest --filename {name}-{version}-chrome.zip"
+    "package": "npm run build && web-ext build --source-dir dist/firefox --overwrite-dest --filename {name}-{version}-firefox.zip && web-ext build --source-dir dist/chrome --overwrite-dest --filename {name}-{version}-chrome.zip",
+    "probe": "node tools/probe.mjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.2.7",

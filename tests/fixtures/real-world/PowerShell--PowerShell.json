@@ -1,0 +1,172 @@
+{
+  "repo": "PowerShell/PowerShell",
+  "tag": "v7.6.5",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "hashes.sha256",
+      "size": 6522,
+      "downloadCount": 11456
+    },
+    {
+      "name": "powershell-7.6.5-1.cm.aarch64.rpm",
+      "size": 33503509,
+      "downloadCount": 1361
+    },
+    {
+      "name": "powershell-7.6.5-1.cm.x86_64.rpm",
+      "size": 35774656,
+      "downloadCount": 1239
+    },
+    {
+      "name": "powershell-7.6.5-1.rh.x86_64.rpm",
+      "size": 68756328,
+      "downloadCount": 1592
+    },
+    {
+      "name": "powershell-7.6.5-linux-arm32.tar.gz",
+      "size": 70527559,
+      "downloadCount": 628
+    },
+    {
+      "name": "powershell-7.6.5-linux-arm64.tar.gz",
+      "size": 69401720,
+      "downloadCount": 5910
+    },
+    {
+      "name": "powershell-7.6.5-linux-musl-x64.tar.gz",
+      "size": 73392844,
+      "downloadCount": 1066
+    },
+    {
+      "name": "powershell-7.6.5-linux-x64-fxdependent.tar.gz",
+      "size": 21136473,
+      "downloadCount": 520
+    },
+    {
+      "name": "powershell-7.6.5-linux-x64-musl-noopt-fxdependent.tar.gz",
+      "size": 21123949,
+      "downloadCount": 467
+    },
+    {
+      "name": "powershell-7.6.5-linux-x64.tar.gz",
+      "size": 73393424,
+      "downloadCount": 36453
+    },
+    {
+      "name": "powershell-7.6.5-osx-arm64.pkg",
+      "size": 68468478,
+      "downloadCount": 64542
+    },
+    {
+      "name": "powershell-7.6.5-osx-arm64.tar.gz",
+      "size": 68105059,
+      "downloadCount": 3615
+    },
+    {
+      "name": "powershell-7.6.5-osx-x64.pkg",
+      "size": 72542940,
+      "downloadCount": 12337
+    },
+    {
+      "name": "powershell-7.6.5-osx-x64.tar.gz",
+      "size": 72205656,
+      "downloadCount": 688
+    },
+    {
+      "name": "PowerShell-7.6.5-win-arm64.msi",
+      "size": 107790336,
+      "downloadCount": 17448
+    },
+    {
+      "name": "PowerShell-7.6.5-win-arm64.zip",
+      "size": 99526416,
+      "downloadCount": 1592
+    },
+    {
+      "name": "PowerShell-7.6.5-win-fxdependent.zip",
+      "size": 23009674,
+      "downloadCount": 447
+    },
+    {
+      "name": "PowerShell-7.6.5-win-fxdependentWinDesktop.zip",
+      "size": 21332861,
+      "downloadCount": 481
+    },
+    {
+      "name": "PowerShell-7.6.5-win-x64.msi",
+      "size": 113750016,
+      "downloadCount": 543295
+    },
+    {
+      "name": "PowerShell-7.6.5-win-x64.zip",
+      "size": 106319290,
+      "downloadCount": 26487
+    },
+    {
+      "name": "PowerShell-7.6.5-win-x86.msi",
+      "size": 106680320,
+      "downloadCount": 9161
+    },
+    {
+      "name": "PowerShell-7.6.5-win-x86.zip",
+      "size": 98921798,
+      "downloadCount": 992
+    },
+    {
+      "name": "PowerShell-7.6.5.msixbundle",
+      "size": 339932093,
+      "downloadCount": 356997
+    },
+    {
+      "name": "powershell-lts-7.6.5-1.cm.aarch64.rpm",
+      "size": 33502493,
+      "downloadCount": 201
+    },
+    {
+      "name": "powershell-lts-7.6.5-1.cm.x86_64.rpm",
+      "size": 35778663,
+      "downloadCount": 206
+    },
+    {
+      "name": "powershell-lts-7.6.5-1.rh.x86_64.rpm",
+      "size": 68746321,
+      "downloadCount": 290
+    },
+    {
+      "name": "powershell-lts-7.6.5-osx-arm64.pkg",
+      "size": 68469513,
+      "downloadCount": 691
+    },
+    {
+      "name": "powershell-lts-7.6.5-osx-x64.pkg",
+      "size": 72542359,
+      "downloadCount": 566
+    },
+    {
+      "name": "PowerShell-LTS-7.6.5.msixbundle",
+      "size": 339930959,
+      "downloadCount": 525
+    },
+    {
+      "name": "powershell-lts_7.6.5-1.deb_amd64.deb",
+      "size": 54043726,
+      "downloadCount": 1552
+    },
+    {
+      "name": "powershell-lts_7.6.5-1.deb_arm64.deb",
+      "size": 48369298,
+      "downloadCount": 398
+    },
+    {
+      "name": "powershell_7.6.5-1.deb_amd64.deb",
+      "size": 54013266,
+      "downloadCount": 9693
+    },
+    {
+      "name": "powershell_7.6.5-1.deb_arm64.deb",
+      "size": 48359394,
+      "downloadCount": 455
+    }
+  ]
+}

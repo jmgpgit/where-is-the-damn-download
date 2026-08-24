@@ -1,0 +1,77 @@
+{
+  "repo": "qbittorrent/qBittorrent",
+  "tag": "release-5.2.3",
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "qbittorrent-5.2.3.dmg",
+      "size": 48317381,
+      "downloadCount": 4467
+    },
+    {
+      "name": "qbittorrent-5.2.3.dmg.asc",
+      "size": 887,
+      "downloadCount": 711
+    },
+    {
+      "name": "qbittorrent-5.2.3.tar.xz",
+      "size": 5305896,
+      "downloadCount": 1591
+    },
+    {
+      "name": "qbittorrent-5.2.3.tar.xz.asc",
+      "size": 887,
+      "downloadCount": 586
+    },
+    {
+      "name": "qbittorrent-5.2.3_lt20.dmg",
+      "size": 49285730,
+      "downloadCount": 3425
+    },
+    {
+      "name": "qbittorrent-5.2.3_lt20.dmg.asc",
+      "size": 887,
+      "downloadCount": 640
+    },
+    {
+      "name": "qbittorrent-5.2.3_lt20_x86_64.AppImage",
+      "size": 101444088,
+      "downloadCount": 4377
+    },
+    {
+      "name": "qbittorrent-5.2.3_lt20_x86_64.AppImage.asc",
+      "size": 887,
+      "downloadCount": 511
+    },
+    {
+      "name": "qbittorrent-5.2.3_x86_64.AppImage",
+      "size": 101222904,
+      "downloadCount": 2106
+    },
+    {
+      "name": "qbittorrent-5.2.3_x86_64.AppImage.asc",
+      "size": 887,
+      "downloadCount": 535
+    },
+    {
+      "name": "qbittorrent_5.2.3_lt20_x64_setup.exe",
+      "size": 45733762,
+      "downloadCount": 41197
+    },
+    {
+      "name": "qbittorrent_5.2.3_lt20_x64_setup.exe.asc",
+      "size": 887,
+      "downloadCount": 2000
+    },
+    {
+      "name": "qbittorrent_5.2.3_x64_setup.exe",
+      "size": 43100219,
+      "downloadCount": 14168
+    },
+    {
+      "name": "qbittorrent_5.2.3_x64_setup.exe.asc",
+      "size": 887,
+      "downloadCount": 989
+    }
+  ]
+}
