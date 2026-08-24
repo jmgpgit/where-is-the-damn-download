@@ -1,0 +1,30 @@
+{
+  "name": "wheres-the-download",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser extension that finds the right ready-to-run download for your computer in a GitHub release.",
+  "license": "MPL-2.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build": "node tools/build.mjs",
+    "build:dev": "node tools/build.mjs --dev",
+    "icons": "node tools/icons.mjs",
+    "lint": "web-ext lint --source-dir dist/firefox",
+    "start": "npm run build:dev && web-ext run --source-dir dist/firefox --start-url https://github.com",
+    "package": "npm run build && web-ext build --source-dir dist/firefox --overwrite-dest --filename {name}-{version}-firefox.zip && web-ext build --source-dir dist/chrome --overwrite-dest --filename {name}-{version}-chrome.zip"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.2.7",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.0.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11",
+    "web-ext": "^10.6.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

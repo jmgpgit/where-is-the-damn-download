@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Where's the Damn Download?",
+  "version": "0.1.0",
+  "minimum_chrome_version": "121",
+  "description": "Finds the ready-to-run download for your computer in a GitHub release — and says so honestly when there isn't one.",
+  "homepage_url": "https://github.com/jmgpgit/wheres-the-download",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "wheres-the-download@jmgpgit.github.io",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["https://api.github.com/*"],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Where's the Damn Download?",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "js": ["content.js"]
+    }
+  ]
+}
