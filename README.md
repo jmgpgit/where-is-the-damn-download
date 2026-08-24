@@ -4,6 +4,12 @@ A browser extension for people who were sent to a GitHub repository to
 "download the program" and found a wall of files named
 `MyApp-4.2.1-x86_64-pc-windows-msvc.zip`.
 
+![A post on r/github asking why there is code instead of an exe file](docs/source.png)
+
+That post got 13,000 upvotes, which is a lot of people having the same bad
+afternoon. They are not wrong to be lost: the file they want is usually right
+there, four rows down, behind a name written for somebody else.
+
 On a repository's page it detects your operating system and processor, reads
 the repository's GitHub Releases, and points at the file you most likely need:
 
