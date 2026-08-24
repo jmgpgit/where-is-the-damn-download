@@ -46,7 +46,9 @@ function toChrome(manifest) {
 
 async function emit(target, manifest) {
   const out = path.join(DIST, target);
-  await rm(out, { recursive: true, force: true });
+  // Dev rebuilds write in place: web-ext is watching this tree and must never
+  // catch it without a manifest.
+  if (!DEV) await rm(out, { recursive: true, force: true });
   await mkdir(path.join(out, 'options'), { recursive: true });
 
   for (const entry of ENTRIES) {

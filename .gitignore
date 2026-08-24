@@ -1,6 +1,7 @@
 node_modules/
 dist/
 web-ext-artifacts/
+.dev-profile/
 *.log
 CLAUDE.md
 .claude/

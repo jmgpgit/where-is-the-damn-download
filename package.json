@@ -13,7 +13,7 @@
     "build:dev": "node tools/build.mjs --dev",
     "icons": "node tools/icons.mjs",
     "lint": "web-ext lint --source-dir dist/firefox",
-    "start": "npm run build:dev && web-ext run --source-dir dist/firefox --start-url https://github.com",
+    "start": "node tools/dev.mjs",
     "package": "npm run build && web-ext build --source-dir dist/firefox --overwrite-dest --filename {name}-{version}-firefox.zip && web-ext build --source-dir dist/chrome --overwrite-dest --filename {name}-{version}-chrome.zip"
   },
   "devDependencies": {

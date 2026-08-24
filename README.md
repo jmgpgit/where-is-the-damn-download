@@ -48,16 +48,23 @@ npm run typecheck   # tsc --noEmit
 npm run build       # dist/firefox and dist/chrome
 npm run lint        # web-ext lint on the Firefox build
 npm run package     # zips for both stores in web-ext-artifacts/
-npm start           # Firefox with the dev build, opened on github.com
+npm start           # Firefox with the extension loaded, on a repo with releases
+npm start -- --chrome   # same in Chrome/Chromium
+npm start -- --fresh    # throwaway profile instead of .dev-profile/
 npm run icons       # regenerate icons/ from tools/icons.mjs
 ```
 
-Load unpacked: Chrome → `chrome://extensions` → Developer mode → Load
-unpacked → `dist/chrome`. Firefox → `about:debugging#/runtime/this-firefox` →
-Load Temporary Add-on → `dist/firefox/manifest.json`.
+`npm start` (`tools/dev.mjs`) makes a dev build, opens the browser with a
+persistent profile under `.dev-profile/` so the GitHub login and the
+extension's settings survive between launches, and rebuilds on every change
+to `src/`, `icons/` or `manifest.src.json`; web-ext then reloads the
+extension. Any other flag is passed to `web-ext run` (`--devtools`, for one).
 
-`npm run build:dev` turns on diagnostic logging (`__DEV__`) and inline source
-maps.
+To load a build by hand instead: Chrome → `chrome://extensions` → Developer
+mode → Load unpacked → `dist/chrome`. Firefox →
+`about:debugging#/runtime/this-firefox` → Load Temporary Add-on →
+`dist/firefox/manifest.json`. `npm run build:dev` gives a build with
+diagnostic logging (`__DEV__`) and inline source maps.
 
 ## Layout
 
