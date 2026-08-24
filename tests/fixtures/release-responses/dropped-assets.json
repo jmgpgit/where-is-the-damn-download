@@ -1,0 +1,63 @@
+{
+  "url": "https://api.github.com/repos/acme/widget/releases/198235000",
+  "html_url": "https://github.com/acme/widget/releases/tag/v2.4.2",
+  "id": 198235000,
+  "tag_name": "v2.4.2",
+  "name": "Widget 2.4.2",
+  "draft": false,
+  "prerelease": false,
+  "published_at": "2026-08-18T08:30:00Z",
+  "assets": [
+    {
+      "id": 601,
+      "name": "widget-2.4.2-still-uploading.zip",
+      "label": null,
+      "content_type": "application/zip",
+      "state": "starter",
+      "size": 0,
+      "download_count": 0,
+      "browser_download_url": "https://github.com/acme/widget/releases/download/v2.4.2/widget-2.4.2-still-uploading.zip"
+    },
+    {
+      "id": 602,
+      "name": "widget-2.4.2-insecure.zip",
+      "label": null,
+      "content_type": "application/zip",
+      "state": "uploaded",
+      "size": 1024,
+      "download_count": 3,
+      "browser_download_url": "http://github.com/acme/widget/releases/download/v2.4.2/widget-2.4.2-insecure.zip"
+    },
+    {
+      "id": 603,
+      "name": "widget-2.4.2-elsewhere.zip",
+      "label": null,
+      "content_type": "application/zip",
+      "state": "uploaded",
+      "size": 2048,
+      "download_count": 7,
+      "browser_download_url": "https://evil.com/acme/widget/releases/download/v2.4.2/widget-2.4.2-elsewhere.zip"
+    },
+    {
+      "id": 604,
+      "name": "widget-2.4.2-wrong-repo.zip",
+      "label": null,
+      "content_type": "application/zip",
+      "state": "uploaded",
+      "size": 4096,
+      "download_count": 11,
+      "browser_download_url": "https://github.com/mallory/other-repo/releases/download/v2.4.2/widget-2.4.2-wrong-repo.zip"
+    },
+    {
+      "id": 605,
+      "name": "widget-2.4.2-linux-x86_64.AppImage",
+      "label": "Linux AppImage",
+      "content_type": "application/octet-stream",
+      "state": "uploaded",
+      "size": 40230144,
+      "digest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "download_count": 4211,
+      "browser_download_url": "https://github.com/acme/widget/releases/download/v2.4.2/widget-2.4.2-linux-x86_64.AppImage"
+    }
+  ]
+}

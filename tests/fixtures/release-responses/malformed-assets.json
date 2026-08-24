@@ -1,0 +1,11 @@
+{
+  "url": "https://api.github.com/repos/acme/widget/releases/198234771",
+  "html_url": "https://github.com/acme/widget/releases/tag/v2.4.1",
+  "id": 198234771,
+  "tag_name": "v2.4.1",
+  "name": "Widget 2.4.1",
+  "draft": false,
+  "prerelease": false,
+  "published_at": "2026-08-11T14:02:01Z",
+  "assets": "surprisingly, a string"
+}

@@ -1,0 +1,18 @@
+{
+  "url": "https://api.github.com/repos/acme/widget/releases/198234900",
+  "html_url": "https://github.com/acme/widget/releases/tag/untagged-91f2ab7cc001",
+  "id": 198234900,
+  "node_id": "RE_kwDOJx1abc4L0F9Z",
+  "tag_name": "v2.5.0",
+  "target_commitish": "main",
+  "name": "Widget 2.5.0 (work in progress)",
+  "draft": true,
+  "prerelease": false,
+  "created_at": "2026-08-20T10:00:00Z",
+  "published_at": null,
+  "author": { "login": "acme-bot", "id": 9911223, "type": "Bot", "site_admin": false },
+  "assets": [],
+  "tarball_url": null,
+  "zipball_url": null,
+  "body": "Draft notes"
+}
