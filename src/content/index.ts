@@ -17,7 +17,7 @@ import type {
   StateResponse,
 } from '../shared/messages';
 import { renderPanel, type PanelHandlers, type PanelView } from '../ui/recommendation-card';
-import { HEADINGS, MOUNT_ATTR, STATES } from '../ui/strings';
+import { HEADINGS, HINTS, MOUNT_ATTR, STATES } from '../ui/strings';
 import { getPageContext } from './github-context';
 import { findExistingMount, mountPanel, unmountPanel } from './mount';
 import { observeRoutes } from './route-observer';
@@ -94,26 +94,30 @@ function preferencesFrom(settings: ExtensionSettings): UserPreferences {
   };
 }
 
+/** What to suggest when nothing here can be run. Wheels are the one case the files give away. */
+function noDownloadHints(release: ReleaseInfo): string[] {
+  const python = release.assets.some((asset) => asset.name.toLowerCase().endsWith('.whl'));
+  return python ? [HINTS.pythonPackage, ...HINTS.noDownload] : [...HINTS.noDownload];
+}
+
 function buildView(context: RepoContext, state: StateResponse): PanelView {
   const { release, settings, platform } = state;
-  const status = (heading: string, body: string, note?: string): PanelView =>
-    note
-      ? { kind: 'status', heading, body, note, settings, platform }
-      : { kind: 'status', heading, body, settings, platform };
+  const status = (heading: string, body: string, hints?: string[]): PanelView =>
+    hints ? { kind: 'status', heading, body, hints, settings, platform } : { kind: 'status', heading, body, settings, platform };
 
   switch (release.status) {
     case 'ok': {
       // GitHub's generated source archives are not assets; an empty list
       // means the release offers nothing but those.
       if (release.release.assets.length === 0) {
-        return status(HEADINGS.none, STATES.onlySource);
+        return status(HEADINGS.none, STATES.onlySource, [...HINTS.noDownload]);
       }
       const recommendation = recommend(
         toAssetInputs(release.release),
         platform,
         preferencesFrom(settings)
       );
-      return {
+      const view: PanelView = {
         kind: 'recommendation',
         settings,
         platform,
@@ -122,11 +126,13 @@ function buildView(context: RepoContext, state: StateResponse): PanelView {
         viewingTag: context.kind === 'release-tag',
         recommendation,
       };
+      if (recommendation.confidence === 'none') view.hints = noDownloadHints(release.release);
+      return view;
     }
     case 'no-releases':
       return context.kind === 'release-tag'
         ? status(HEADINGS.none, STATES.releaseNotFound)
-        : status(STATES.noReleasesTitle, STATES.noReleases);
+        : status(STATES.noReleasesTitle, STATES.noReleases, [...HINTS.noReleases]);
     case 'no-stable-release':
       return status(
         HEADINGS.none,

@@ -51,6 +51,21 @@ export const STATES = {
     'This release only provides source code through GitHub. A ready-to-run application was not attached.',
 } as const;
 
+/** Where to look next when there is nothing here to run. Plain language, no blame. */
+export const HINTS = {
+  noReleases: [
+    "Check the project's README (the description on its main page): it usually says where to get the program, or that there is no program to download.",
+    'Many projects on GitHub are building blocks for programmers, not apps. Those are installed with tools such as pip, uv, npm or cargo rather than downloaded.',
+  ],
+  noDownload: [
+    "The download may live on the project's own website; the README on the main page usually links to it.",
+    'It may be a library or developer tool, installed with a tool such as pip, uv, npm or cargo rather than downloaded.',
+    'It may need to be built from the source code, which is a job for a developer.',
+  ],
+  pythonPackage:
+    'The files here are Python packages. This is normally installed from a terminal with pip or uv, not downloaded and opened.',
+} as const;
+
 export const LABELS = {
   download: 'Download',
   whyThisFile: 'Why this file?',

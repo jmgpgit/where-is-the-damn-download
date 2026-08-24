@@ -180,6 +180,17 @@ export const PANEL_CSS = `
   opacity: 0.75;
 }
 
+.wtd-hints {
+  margin: 8px 0 0 18px;
+  padding: 0;
+  font-size: 13px;
+  color: var(--wtd-fg-muted);
+}
+
+.wtd-hints li {
+  margin-top: 4px;
+}
+
 .wtd-evidence {
   margin: 4px 0 0 12px;
   padding: 0;

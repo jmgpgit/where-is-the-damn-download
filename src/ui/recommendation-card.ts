@@ -33,6 +33,8 @@ export type PanelView =
       heading: string;
       body: string;
       note?: string;
+      /** Where to look next; shown as a short list under the body. */
+      hints?: readonly string[];
       settings: ExtensionSettings;
       platform: UserPlatform;
     }
@@ -44,6 +46,8 @@ export type PanelView =
       stale: boolean;
       viewingTag: boolean;
       recommendation: Recommendation;
+      /** Shown only when nothing could be recommended. */
+      hints?: readonly string[];
     };
 
 function el<K extends keyof HTMLElementTagNameMap>(
@@ -62,6 +66,12 @@ function disclosure(doc: Document, summaryText: string, content: Node): HTMLDeta
   const details = el(doc, 'details', 'wtd-details');
   details.append(el(doc, 'summary', undefined, summaryText), content);
   return details;
+}
+
+function hintList(doc: Document, hints: readonly string[]): HTMLUListElement {
+  const ul = el(doc, 'ul', 'wtd-hints');
+  for (const hint of hints) ul.append(el(doc, 'li', undefined, hint));
+  return ul;
 }
 
 function footer(doc: Document): HTMLElement {
@@ -195,6 +205,7 @@ function renderRecommendation(
     fragment.append(choiceList(doc, recommendation));
   } else {
     fragment.append(el(doc, 'div', 'wtd-state', recommendation.summary || STATES.noCompatible));
+    if (view.hints?.length) fragment.append(hintList(doc, view.hints));
   }
 
   for (const warning of recommendation.warnings) {
@@ -246,6 +257,7 @@ export function renderPanel(
     container.append(el(doc, 'h2', 'wtd-heading', view.heading));
     container.append(el(doc, 'div', 'wtd-state', view.body));
     if (view.note) container.append(el(doc, 'div', 'wtd-note', view.note));
+    if (view.hints?.length) container.append(hintList(doc, view.hints));
     container.append(controls(doc, view.settings, handlers), footer(doc));
     return;
   }

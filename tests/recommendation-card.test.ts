@@ -163,6 +163,22 @@ describe('renderPanel', () => {
     expect(badge?.hasAttribute('aria-label')).toBe(false);
   });
 
+  it('shows where-to-look hints when nothing can be recommended', () => {
+    const rec = recommendation({ confidence: 'none', summary: 'Nothing to run here.' });
+    delete rec.primary;
+    renderPanel(
+      container,
+      { ...view(rec), hints: ['Try the README.', 'It may be a library.'] },
+      handlers
+    );
+    const items = [...container.querySelectorAll('.wtd-hints li')].map((li) => li.textContent);
+    expect(items).toEqual(['Try the README.', 'It may be a library.']);
+    expect(container.querySelector('.wtd-download')).toBeNull();
+
+    renderPanel(container, view(recommendation({})), handlers);
+    expect(container.querySelector('.wtd-hints')).toBeNull();
+  });
+
   it('renders status states with controls', () => {
     renderPanel(
       container,
