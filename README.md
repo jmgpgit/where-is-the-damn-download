@@ -17,13 +17,17 @@ It is just as willing to say "there is no ready-to-run Windows build here", or
 is worse than none. The recommendation is about file compatibility, not a
 security review of the project.
 
-_Screenshots: `docs/screenshot-home.png`, `docs/screenshot-release.png` (to be
-added)._
+![The panel on a repository home page](docs/screenshot-recommendation.png)
+
+More: [every file with its own reason](docs/screenshot-other-downloads.png), and
+[a repository with nothing to download](docs/screenshot-no-releases.png).
+`npm run shots` regenerates them.
 
 ## Browsers and platforms
 
 - Chrome and Chromium browsers (Manifest V3, service worker).
 - Firefox desktop 140+ (Manifest V3, event page).
+- Firefox for Android 142+ (the same build).
 - Windows is fully supported (x64, ARM64, 32-bit, installer vs portable
   preference, overrides). macOS and Linux have baseline rules and fixtures;
   claims there stay conservative.
@@ -39,21 +43,51 @@ architecture and package preference live in the panel and on the options page
 
 Nothing is downloaded until you click the link yourself.
 
+## Build environment
+
+This is built on Windows 11 with Node 24.18.1 and npm 11.16.0. The build is
+platform-independent and the default reviewer environment (Ubuntu 24.04.4 LTS,
+ARM64, Node 24.14.0, npm 11.9.0) works unchanged: `package-lock.json` carries
+all 26 `@esbuild/*` platform packages, `linux-arm64` among them, so `npm ci`
+resolves the right binary there.
+
+```sh
+npm ci
+npm run build
+```
+
+The Firefox output is `dist/firefox`, and it is byte for byte what the uploaded
+ZIP contains. esbuild bundles and transpiles the TypeScript in `src/` to plain
+JavaScript; nothing is minified and no source maps are emitted.
+
+One trap: **there is no `manifest.json` in this repository.** The checked-in
+file is `manifest.src.json`, and `tools/build.mjs` generates each browser's
+manifest from it during the build.
+
 ## Development
 
 ```sh
-npm install
+npm ci
 npm test            # vitest: classifier fixtures, API mocks, jsdom UI
+npm run test:watch  # the same suite, watching
 npm run typecheck   # tsc --noEmit
 npm run build       # dist/firefox and dist/chrome
+npm run build:dev   # same, with __DEV__ logging and inline source maps
 npm run lint        # web-ext lint on the Firefox build
 npm run package     # zips for both stores in web-ext-artifacts/
 npm start           # Firefox with the extension loaded, on a repo with releases
 npm start -- --chrome   # same in Chrome/Chromium
 npm start -- --fresh    # throwaway profile instead of .dev-profile/
-npm run icons       # regenerate icons/ from tools/icons.mjs
+npm run icons       # regenerate icons/ and docs/store-icon-128.png (the Chrome listing icon)
 npm run probe -- owner/repo [--save]   # classify a repo's latest release; --save snapshots it as a real-world fixture
 ```
+
+`npm run build` (`tools/build.mjs`) runs esbuild over the TypeScript in `src/`:
+the three entry points are bundled and transpiled into plain JavaScript under
+`dist/firefox` and `dist/chrome`, and the manifest is derived from
+`manifest.src.json` per browser. Nothing is minified and only `build:dev` emits
+source maps, so the shipped files read close to the source — which matters if
+you are reviewing a store upload.
 
 `npm start` (`tools/dev.mjs`) makes a dev build, opens the browser with a
 persistent profile under `.dev-profile/` so the GitHub login and the
@@ -64,8 +98,7 @@ extension. Any other flag is passed to `web-ext run` (`--devtools`, for one).
 To load a build by hand instead: Chrome → `chrome://extensions` → Developer
 mode → Load unpacked → `dist/chrome`. Firefox →
 `about:debugging#/runtime/this-firefox` → Load Temporary Add-on →
-`dist/firefox/manifest.json`. `npm run build:dev` gives a build with
-diagnostic logging (`__DEV__`) and inline source maps.
+`dist/firefox/manifest.json`.
 
 ## Layout
 
@@ -79,7 +112,7 @@ diagnostic logging (`__DEV__`) and inline source maps.
 - `tools/build.mjs` — esbuild + manifest derivation. See
   [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Limitations (0.1)
+## Limitations (1.0)
 
 - Public repositories on github.com only. No GitHub Enterprise, no private
   repositories, no authentication.
@@ -91,11 +124,13 @@ diagnostic logging (`__DEV__`) and inline source maps.
 
 ## Contributing
 
-Add a failing fixture before changing a rule: asset cases in
-`tests/*.test.ts`, whole releases in `tests/fixtures/repository-cases/`. Keep
-weights in `src/domain/rules.ts` and copy in `src/ui/strings.ts`. Run
-`npm test && npm run typecheck && npm run build && npm run lint` before
-opening a pull request.
+[CONTRIBUTING.md](CONTRIBUTING.md) has the promises that decide what belongs
+here, how to add a classifier rule, and where things live. The short version:
+add a failing fixture before changing a rule (asset cases in `tests/*.test.ts`,
+whole releases in `tests/fixtures/repository-cases/`), keep weights in
+`src/domain/rules.ts` and copy in `src/ui/strings.ts`, and run
+`npm test && npm run typecheck && npm run build && npm run lint` before opening
+a pull request.
 
 ## Privacy and licence
 

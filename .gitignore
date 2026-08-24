@@ -4,4 +4,7 @@ web-ext-artifacts/
 .dev-profile/
 *.log
 CLAUDE.md
-.claude/
+# .claude/skills/ is tracked: the release procedure must survive a fresh clone.
+.claude/*
+!.claude/skills/
+store-submissions/

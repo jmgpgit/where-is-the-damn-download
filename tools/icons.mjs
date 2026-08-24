@@ -154,6 +154,25 @@ function png(pixels, size) {
 
 // --- main --------------------------------------------------------------------
 
+/**
+ * The Chrome Web Store listing icon is 128x128 with the artwork inset to 96x96
+ * and the remaining 16px on each side transparent. The manifest icon is the
+ * same size and full-bleed, so it is the wrong file for the listing: uploading
+ * it gets the tile cropped or padded again by the store.
+ */
+function storeIcon() {
+  const art = render(96);
+  const out = new Uint8Array(128 * 128 * 4);
+  for (let y = 0; y < 96; y += 1) {
+    for (let x = 0; x < 96; x += 1) {
+      const from = (y * 96 + x) * 4;
+      const to = ((y + 16) * 128 + (x + 16)) * 4;
+      for (let c = 0; c < 4; c += 1) out[to + c] = art[from + c];
+    }
+  }
+  return out;
+}
+
 const args = process.argv.slice(2);
 const outIdx = args.indexOf('--out');
 const out = outIdx >= 0 && args[outIdx + 1] ? args[outIdx + 1] : join(HERE, '..', 'icons');
@@ -163,3 +182,10 @@ for (const size of SIZES) {
   writeFileSync(join(out, `icon-${size}.png`), png(render(size), size));
   console.log(`  icon-${size}.png`);
 }
+
+// Store artwork lives outside icons/, which build.mjs copies wholesale into the
+// package; a listing image has no business shipping to users.
+const docs = join(HERE, '..', 'docs');
+mkdirSync(docs, { recursive: true });
+writeFileSync(join(docs, 'store-icon-128.png'), png(storeIcon(), 128));
+console.log('  docs/store-icon-128.png (Chrome listing icon, 96x96 artwork padded to 128)');

@@ -1,6 +1,6 @@
 {
   "name": "wheres-the-download",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Browser extension that finds the right ready-to-run download for your computer in a GitHub release.",
   "license": "MPL-2.0",
@@ -15,7 +15,8 @@
     "lint": "web-ext lint --source-dir dist/firefox",
     "start": "node tools/dev.mjs",
     "package": "npm run build && web-ext build --source-dir dist/firefox --overwrite-dest --filename {name}-{version}-firefox.zip && web-ext build --source-dir dist/chrome --overwrite-dest --filename {name}-{version}-chrome.zip",
-    "probe": "node tools/probe.mjs"
+    "probe": "node tools/probe.mjs",
+    "shots": "node tools/shots.mjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.2.7",
@@ -25,7 +26,12 @@
     "vitest": "^4.1.11",
     "web-ext": "^10.6.0"
   },
-  "allowScripts": {
-    "esbuild@0.28.2": true
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmgpgit/where-is-the-damn-download.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jmgpgit/where-is-the-damn-download/issues"
+  },
+  "homepage": "https://github.com/jmgpgit/where-is-the-damn-download"
 }

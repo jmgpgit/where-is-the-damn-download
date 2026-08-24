@@ -1,2 +1,7 @@
 * text=auto eol=lf
 *.png binary
+
+# `git archive` builds the source archive AMO reviewers get. These are notes to
+# ourselves about the dashboards, not part of the extension's source.
+store-submissions export-ignore
+.claude export-ignore
