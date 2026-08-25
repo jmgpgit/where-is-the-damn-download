@@ -301,27 +301,26 @@ source" and "cannot be web-based". The build target is already a `dist/` subfold
 
 ## 7. Screenshots
 
-**The extension has none yet.** Chrome will reject the listing without them.
+`npm run shots` captures them into `docs/`, and 1.0.0 shipped four. Chrome will reject a listing
+with none, so re-run it whenever the panel's look changes.
 
 - **Chrome — mandatory.** "If your product has a blank description field or is missing an icon or
   screenshots, it will be rejected." Store icon 128×128 PNG (artwork 96×96 with 16px transparent
   padding, working on light and dark) — `npm run icons` emits it as `docs/store-icon-128.png`. The
   manifest's `icons/icon-128.png` is full-bleed and is the wrong file for the listing tile; that is
   why there are two. At least 1 and up to 5 screenshots at 1280×800 or 640×400,
-  square corners, full bleed, no padding — 1280×800 preferred. Small promo tile 440×280 PNG or JPEG,
-  **required**, avoid text, must survive being halved on a light grey background. Marquee tile
-  1400×560 is explicitly optional. The YouTube video is contradicted between Google's own pages
-  (one lists it among assets you "must provide", another says only icon, promo tile and screenshot
-  are mandatory) — leave it empty and see whether Submit blocks. Do not shoot a video on the
-  strength of one sentence.
+  square corners, full bleed, no padding — 1280×800 preferred. The small promo tile 440×280, the
+  marquee tile 1400×560 and the YouTube video are all optional: 1.0.0 went out with none of them.
+  Several of Google's own pages still call the small tile required, which is where that belief comes
+  from; the dashboard is the authority, not the documentation.
 - **AMO — optional.** Nothing in the submission flow requires a preview. Recommended 1280×800 or any
   1.6:1 ratio, caption cap 280 each. Listing icon 32×32 and 64×64 PNG/JPEG; keep an SVG source.
 
 Two shots carry the whole pitch: the injected panel on a real release page with the recommended
 asset called out, and the honest "no ready-to-run build here" state — the second is worth more than
 three more of the happy path, because it is the claim the summary makes. Shoot at 1280×800 and the
-same files serve both stores. The store icon is the only asset here a command produces; the
-screenshots and the promo tile are captured by hand, and there are still none.
+same files serve both stores. The store icon is the only asset here a command produces;
+`npm run shots` (`tools/shots.mjs`) captures the screenshots from a real browser.
 
 ## 8. After the merge
 
