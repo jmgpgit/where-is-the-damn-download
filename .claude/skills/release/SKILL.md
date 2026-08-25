@@ -330,7 +330,12 @@ In this order:
 1. **Push `main`.** Both listings give the GitHub `PRIVACY.md` URL as the privacy policy, so an
    unpushed policy contradicts the justification under review. Open it logged out and check it
    renders (§5).
-2. **Tag and publish a GitHub release**, notes taken from the changelog so the two cannot drift:
+2. **Tag and publish a GitHub release.** Both, not just the tag: a tag on its own is filed under
+   Tags with no title and no notes, and the repository reads as half-finished next to one that
+   publishes releases. `gh release create` is what turns the tag into a release. The title is the
+   bare number and the tag keeps the `v` — title `1.0.0` on tag `v1.0.0` — which is how the Royal
+   Road extension reads, and the two should not diverge. Notes come from the changelog so the two
+   cannot drift:
 
    ```sh
    awk '/^## 1\.0\.0/{f=1;next} /^## /{f=0} f' CHANGELOG.md > /tmp/notes.md
@@ -338,8 +343,17 @@ In this order:
    ```
 
    `--target` needs a full SHA or a branch name; a short SHA is rejected as an invalid
-   `target_commitish`. No binaries attached: the Firefox ZIP is unsigned, so release Firefox will
-   not install it permanently and attaching it invites "your download is broken".
+   `target_commitish`, and it can be dropped entirely once the tag is pushed. No binaries attached:
+   the Firefox ZIP is unsigned, so release Firefox will not install it permanently and attaching it
+   invites "your download is broken".
+
+   Check it landed as a release rather than a tag — `gh release list` should print the title, the
+   word `Latest` and the tag:
+
+   ```sh
+   gh release list --limit 3
+   # 1.0.0   Latest   v1.0.0   2026-08-25T07:53:46Z
+   ```
 3. **Empty `web-ext-artifacts/`, then `npm run package`**, and upload both ZIPs. web-ext writes a
    per-version filename and never deletes the old ones, so every past build stays in that directory
    until it is cleared and a stale ZIP is one mis-click away. Cleared first, what is in there is the
