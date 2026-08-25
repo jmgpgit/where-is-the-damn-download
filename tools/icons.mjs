@@ -130,18 +130,20 @@ function chunk(type, data) {
   return Buffer.concat([len, body, crc]);
 }
 
-function png(pixels, size) {
+function pngRect(pixels, width, height) {
   const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(size, 0);
-  ihdr.writeUInt32BE(size, 4);
+  ihdr.writeUInt32BE(width, 0);
+  ihdr.writeUInt32BE(height, 4);
   ihdr[8] = 8; // bit depth
   ihdr[9] = 6; // truecolour with alpha
 
   // One filter byte (0, "no filter") per scanline; deflate handles flat art.
-  const raw = Buffer.alloc(size * (size * 4 + 1));
-  for (let y = 0; y < size; y += 1) {
-    raw[y * (size * 4 + 1)] = 0;
-    Buffer.from(pixels.buffer, y * size * 4, size * 4).copy(raw, y * (size * 4 + 1) + 1);
+  const stride = width * 4;
+  const raw = Buffer.alloc(height * (stride + 1));
+  const bytes = Buffer.from(pixels.buffer, pixels.byteOffset, pixels.length);
+  for (let y = 0; y < height; y += 1) {
+    raw[y * (stride + 1)] = 0;
+    bytes.copy(raw, y * (stride + 1) + 1, y * stride, (y + 1) * stride);
   }
 
   return Buffer.concat([
@@ -151,6 +153,8 @@ function png(pixels, size) {
     chunk('IEND', Buffer.alloc(0)),
   ]);
 }
+
+const png = (pixels, size) => pngRect(pixels, size, size);
 
 // --- main --------------------------------------------------------------------
 
@@ -173,6 +177,127 @@ function storeIcon() {
   return out;
 }
 
+/**
+ * The Chrome listing's small promotional tile, 440x280.
+ *
+ * The store shows it at half size in places, where any text turns to mush, so
+ * nothing here is text: the meaning is carried by the composition. A stack of
+ * dim rows with exactly one lit green is the product in one shape — a release
+ * full of files, one of them the answer. It reads the same at 220x140, which is
+ * the only test that matters.
+ */
+const PROMO_W = 440;
+const PROMO_H = 280;
+
+const PROMO = {
+  bg: [13, 17, 23],
+  card: [22, 27, 34],
+  edge: [48, 54, 61],
+  muted: [110, 118, 129],
+  green: [35, 134, 54],
+  ink: [255, 255, 255],
+};
+
+function promoTile() {
+  const rows = 5;
+  const rowH = 34;
+  const gap = 12;
+  const x = 44;
+  const w = PROMO_W - x * 2;
+  const top = (PROMO_H - (rows * rowH + (rows - 1) * gap)) / 2;
+  // Filename bars of uneven length: a real release is not a tidy list.
+  const nameW = [0.64, 0.8, 0.52, 0.72, 0.46];
+  const chosen = 2;
+
+  const layers = [];
+  for (let i = 0; i < rows; i += 1) {
+    const y = top + i * (rowH + gap);
+    const isChosen = i === chosen;
+    layers.push({ shape: roundRect(x, y, w, rowH, 8), color: isChosen ? PROMO.green : PROMO.card });
+    if (!isChosen) {
+      layers.push({ shape: roundRect(x, y, w, rowH, 8), color: PROMO.edge, outline: 1 });
+    }
+    // The little square standing in for a file icon.
+    layers.push({
+      shape: roundRect(x + 12, y + 9, 16, 16, 3),
+      color: isChosen ? PROMO.ink : PROMO.muted,
+    });
+    // The filename itself, as a bar. Unreadable is the point.
+    layers.push({
+      shape: roundRect(x + 38, y + 13, (w - 96) * nameW[i], 8, 4),
+      color: isChosen ? PROMO.ink : PROMO.muted,
+    });
+    if (isChosen) {
+      // The mark from the extension's own icon, so the two read as one product.
+      const ax = x + w - 34;
+      const ay = y + 8;
+      layers.push({ shape: rect(ax + 6, ay, 6, 9), color: PROMO.ink });
+      layers.push({
+        shape: polygon([
+          [ax, ay + 8],
+          [ax + 18, ay + 8],
+          [ax + 9, ay + 18],
+        ]),
+        color: PROMO.ink,
+      });
+      layers.push({ shape: roundRect(ax - 1, ay + 20, 20, 4, 2), color: PROMO.ink });
+    }
+  }
+
+  const px = new Uint8Array(PROMO_W * PROMO_H * 4);
+  for (let y = 0; y < PROMO_H; y += 1) {
+    for (let x2 = 0; x2 < PROMO_W; x2 += 1) {
+      const i = (y * PROMO_W + x2) * 4;
+      let [r, g, b] = PROMO.bg;
+      for (const layer of layers) {
+        let hits = 0;
+        for (let sy = 0; sy < SS; sy += 1) {
+          for (let sx = 0; sx < SS; sx += 1) {
+            const gx = x2 + (sx + 0.5) / SS;
+            const gy = y + (sy + 0.5) / SS;
+            if (!layer.shape(gx, gy)) continue;
+            // An "outline" layer paints only the ring just inside its edge.
+            if (layer.outline) {
+              const inner = layer.shape(gx + 1.2, gy) && layer.shape(gx - 1.2, gy) &&
+                layer.shape(gx, gy + 1.2) && layer.shape(gx, gy - 1.2);
+              if (inner) continue;
+            }
+            hits += 1;
+          }
+        }
+        const a = hits / (SS * SS);
+        if (a === 0) continue;
+        r = Math.round(r * (1 - a) + layer.color[0] * a);
+        g = Math.round(g * (1 - a) + layer.color[1] * a);
+        b = Math.round(b * (1 - a) + layer.color[2] * a);
+      }
+      px[i] = r;
+      px[i + 1] = g;
+      px[i + 2] = b;
+      px[i + 3] = 255;
+    }
+  }
+  return px;
+}
+
+/** Half size is where the store actually shows it; box-filter down and check. */
+function halve(pixels, w, h) {
+  const out = new Uint8Array((w / 2) * (h / 2) * 4);
+  for (let y = 0; y < h / 2; y += 1) {
+    for (let x = 0; x < w / 2; x += 1) {
+      for (let c = 0; c < 4; c += 1) {
+        const s =
+          pixels[((y * 2) * w + x * 2) * 4 + c] +
+          pixels[((y * 2) * w + x * 2 + 1) * 4 + c] +
+          pixels[((y * 2 + 1) * w + x * 2) * 4 + c] +
+          pixels[((y * 2 + 1) * w + x * 2 + 1) * 4 + c];
+        out[(y * (w / 2) + x) * 4 + c] = Math.round(s / 4);
+      }
+    }
+  }
+  return out;
+}
+
 const args = process.argv.slice(2);
 const outIdx = args.indexOf('--out');
 const out = outIdx >= 0 && args[outIdx + 1] ? args[outIdx + 1] : join(HERE, '..', 'icons');
@@ -189,3 +314,9 @@ const docs = join(HERE, '..', 'docs');
 mkdirSync(docs, { recursive: true });
 writeFileSync(join(docs, 'store-icon-128.png'), png(storeIcon(), 128));
 console.log('  docs/store-icon-128.png (Chrome listing icon, 96x96 artwork padded to 128)');
+
+const promo = promoTile();
+writeFileSync(join(docs, 'promo-440x280.png'), pngRect(promo, PROMO_W, PROMO_H));
+console.log('  docs/promo-440x280.png (Chrome small promotional tile)');
+writeFileSync(join(docs, 'promo-half-preview.png'), pngRect(halve(promo, PROMO_W, PROMO_H), PROMO_W / 2, PROMO_H / 2));
+console.log('  docs/promo-half-preview.png (how it reads at half size; not uploaded)');

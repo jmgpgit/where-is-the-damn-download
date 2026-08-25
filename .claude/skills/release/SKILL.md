@@ -312,7 +312,11 @@ with none, so re-run it whenever the panel's look changes.
   square corners, full bleed, no padding — 1280×800 preferred. The small promo tile 440×280, the
   marquee tile 1400×560 and the YouTube video are all optional: 1.0.0 went out with none of them.
   Several of Google's own pages still call the small tile required, which is where that belief comes
-  from; the dashboard is the authority, not the documentation.
+  from; the dashboard is the authority, not the documentation. `npm run icons` now draws the small
+  tile anyway as `docs/promo-440x280.png`, plus `docs/promo-half-preview.png` — the store shows the
+  tile at half size, where text turns to mush, so the tile carries no text and the preview is how
+  you check it still reads. Listing images are listing metadata: they can be changed on a live
+  listing without uploading a package, so adding one does not spend a version.
 - **AMO — optional.** Nothing in the submission flow requires a preview. Recommended 1280×800 or any
   1.6:1 ratio, caption cap 280 each. Listing icon 32×32 and 64×64 PNG/JPEG; keep an SVG source.
 
